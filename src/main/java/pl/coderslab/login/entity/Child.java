@@ -18,8 +18,8 @@ public class Child {
     @Column(name = "child_id")
     private int id;
     @Column(name = "email")
-    @Email(message = "*Wpisz prawidłowy email")
-    @NotEmpty(message = "*Wpisz email")
+    @Email(message = "*Jeżeli posiadasz, wpisz email")
+//    @NotEmpty(message = "*Wpisz email")
     private String email;
     @Column(name = "password")
     @Length(min = 5, message = "*Twoje hasło musi zawierać przynajmniej 5 znaków")
