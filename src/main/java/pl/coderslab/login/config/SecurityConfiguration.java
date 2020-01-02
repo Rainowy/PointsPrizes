@@ -28,26 +28,34 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.queries.parents-query}")
     private String parentsQuery;
 
-    @Value("${spring.queries.roles-query}")
-    private String rolesQuery;
+    @Value("${spring.queries.roles-email}")
+    private String rolesByEmail;
 
-    @Value("${spring.queries.parentName-query}")
+    @Value("${spring.queries.roles-username}")
+    private String rolesByUserName;
+
+    @Value("${spring.queries.parent-username}")
     String parentByName;
+
+    @Value("${spring.queries.parent-email}")
+    String parentByEmail;
+
+
 //            = "select name, password, active from parent where name like 'tom'";
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-//        auth.
-//                jdbcAuthentication()
-//                .usersByUsernameQuery(parentsQuery)
-//                .authoritiesByUsernameQuery(rolesQuery)
-//                .dataSource(dataSource)
-//                .passwordEncoder(bCryptPasswordEncoder);
+        auth.
+                jdbcAuthentication()
+                .usersByUsernameQuery(parentByEmail)
+                .authoritiesByUsernameQuery(rolesByEmail)
+                .dataSource(dataSource)
+                .passwordEncoder(bCryptPasswordEncoder);
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(parentByName)
-                .authoritiesByUsernameQuery(rolesQuery)
+                .authoritiesByUsernameQuery(rolesByUserName)
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
     }
