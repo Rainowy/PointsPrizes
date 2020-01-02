@@ -31,12 +31,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.queries.roles-query}")
     private String rolesQuery;
 
+    @Value("${spring.queries.parentName-query}")
+    String parentByName;
+//            = "select name, password, active from parent where name like 'tom'";
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
+//        auth.
+//                jdbcAuthentication()
+//                .usersByUsernameQuery(parentsQuery)
+//                .authoritiesByUsernameQuery(rolesQuery)
+//                .dataSource(dataSource)
+//                .passwordEncoder(bCryptPasswordEncoder);
         auth.
                 jdbcAuthentication()
-                .usersByUsernameQuery(parentsQuery)
+                .usersByUsernameQuery(parentByName)
                 .authoritiesByUsernameQuery(rolesQuery)
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
@@ -55,7 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/user/**").hasAuthority("USER")
+                .antMatchers("/user/**").hasAuthority("PARENT")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
 
                 .anyRequest()
@@ -65,7 +75,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login").failureUrl("/login?error=true")
 //                .defaultSuccessUrl("/admin/home")
                 .successHandler(myAuthenticationSuccessHandler())
-                .usernameParameter("email")
+//                .usernameParameter("email")
+                .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

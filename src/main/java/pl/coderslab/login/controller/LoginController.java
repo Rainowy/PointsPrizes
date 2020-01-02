@@ -2,6 +2,7 @@ package pl.coderslab.login.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import pl.coderslab.login.service.ParentService;
 import pl.coderslab.login.service.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class LoginController {
@@ -25,7 +27,7 @@ public class LoginController {
     @Autowired
     private ParentService parentService;
 
-    @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
@@ -109,25 +111,31 @@ public class LoginController {
 //        modelAndView.setViewName("user/home");
 //        return modelAndView;
 //    }
-    @GetMapping("/user/home")
-    public ModelAndView user() {
+    @GetMapping("/user/panel")
+    public ModelAndView user(@AuthenticationPrincipal Principal parent) {
         ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Parent parent = parentService.findParentByEmail(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + parent.getName() + " " + parent.getLastName() + " (" + parent.getEmail() + ")");
-//        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("user/home");
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        System.out.println(auth.getName());
+//        Parent parent = parentService.findParentByEmail(auth.getName());
+//        Parent currentParent = parentService.findParentByName(parent.getName());
+
+//        Parent parent = parentService.findParentByName(auth.get);
+        modelAndView.addObject("userName", "Welcome " + parent);
+//        + " " +get + " (" + parent.getEmail() + ")");
+        modelAndView.addObject("admineMessage", "Content Available Only for Users with Admin Role");
+        modelAndView.setViewName("user/user-panel");
         return modelAndView;
     }
 
-    @GetMapping("/admin/home")
+    @GetMapping("/admin/panel")
     public ModelAndView admin() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
         User user = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("admin/home");
+        modelAndView.setViewName("admin/admin-panel");
         return modelAndView;
     }
 }
