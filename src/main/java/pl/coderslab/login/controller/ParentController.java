@@ -24,7 +24,7 @@ public class ParentController {
         ModelAndView modelAndView = new ModelAndView();
         Child child = new Child();
         modelAndView.addObject("child", child);
-        modelAndView.setViewName("user/addChild");
+        modelAndView.setViewName("parent/addChild");
         return modelAndView;
     }
 
@@ -32,11 +32,11 @@ public class ParentController {
     public ModelAndView addChild(@Valid Child child, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
-            modelAndView.setViewName("user/addChild");
+            modelAndView.setViewName("parent/addChild");
             return modelAndView;
         }
         parentService.saveChild(child);
-        modelAndView.setViewName("user/user-panel");
+        modelAndView.setViewName("parent/parent-panel");
         return modelAndView;
     }
 }

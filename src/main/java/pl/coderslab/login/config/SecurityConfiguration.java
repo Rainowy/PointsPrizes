@@ -20,12 +20,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    //niezbędne do wyłączenia kodowania hasła
-    @Bean
-    public PasswordEncoder passwordEncoder2() {
-        return new PasswordEnconderTest();
-    }
-    //
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -41,6 +35,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.queries.roles-username}")
     private String rolesByUserName;
 
+    @Value("${spring.queries.roles-username-child}")
+    private String rolesByUserNameChild;
+
     @Value("${spring.queries.parent-username}")
     String parentByName;
 
@@ -50,8 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.queries.child-username}")
     String childByName;
 
+    @Value("${spring.queries.child-email}")
+    String childByEmail;
 
-//            = "select name, password, active from parent where name like 'tom'";
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
@@ -62,13 +60,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .usersByUsernameQuery(parentByEmail)
                 .authoritiesByUsernameQuery(rolesByEmail)
                 .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder2());
+                .passwordEncoder(bCryptPasswordEncoder);
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(parentByName)
                 .authoritiesByUsernameQuery(rolesByUserName)
                 .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder2());
+                .passwordEncoder(bCryptPasswordEncoder);
+        auth.
+                jdbcAuthentication()
+                .usersByUsernameQuery(childByEmail)
+                .authoritiesByUsernameQuery(rolesByEmail)
+                .dataSource(dataSource)
+                .passwordEncoder(bCryptPasswordEncoder);
+        auth.
+                jdbcAuthentication()
+                .usersByUsernameQuery(childByName)
+                .authoritiesByUsernameQuery(rolesByUserNameChild)
+                .dataSource(dataSource)
+                .passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Bean

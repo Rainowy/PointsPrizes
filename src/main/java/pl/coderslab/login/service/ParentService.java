@@ -41,6 +41,7 @@ public class ParentService {
     {
         return parentRepository.findParentByName(name);
     }
+
     public void saveParent(Parent parent) {
         parent.setPassword(bCryptPasswordEncoder.encode(parent.getPassword()));
         parent.setActive(1);

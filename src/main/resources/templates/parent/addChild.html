@@ -2,8 +2,8 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dodaj swoje dzieci</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+    <title>Add Child</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -19,36 +19,43 @@
             <form autocomplete="off" action="#" th:action="@{/parent/addChild}"
                   th:object="${child}" method="post" class="form-horizontal"
                   role="form">
-                <h2>Registration Form</h2>
+                <h2>Podaj dane swojego dziecka</h2>
                 <div class="form-group">
                     <div class="col-sm-9">
                         <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
                                class="validation-message"></label>
                         <input type="text" th:field="*{name}" placeholder="Imię"
-                               class="form-control" />
+                               class="form-control"/>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <label	th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-                                  class="validation-message"></label>
+                        <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                               class="validation-message"></label>
                         <input type="text" th:field="*{lastName}"
-                               placeholder="Nazwisko" class="form-control" />
+                               placeholder="Nazwisko" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-9">
                         <input type="text" th:field="*{email}" placeholder="Email"
-                               class="form-control" /> <label
+                               class="form-control"/> <label
                             th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                             class="validation-message"></label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-9">
+                        <input type="number" th:field="*{age}" placeholder="Wiek"
+                               class="form-control"/> <label
+                            th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
                         <input type="password" th:field="*{password}"
-                               placeholder="Hasło" class="form-control" /> <label
+                               placeholder="Hasło" class="form-control"/> <label
                             th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
                             class="validation-message"></label>
                     </div>
