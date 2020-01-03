@@ -65,9 +65,9 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         }
 
         if (isParent) {
-            return "user/panel";
+            return "parent/panel";
         } else if (isChild) {
-            return "admin/panel";
+            return "child/panel";
         } else if (isAdmin) {
             return "admin/panel";
         } else {

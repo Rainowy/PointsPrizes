@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -19,6 +20,12 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    //niezbędne do wyłączenia kodowania hasła
+    @Bean
+    public PasswordEncoder passwordEncoder2() {
+        return new PasswordEnconderTest();
+    }
+    //
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -40,28 +47,32 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.queries.parent-email}")
     String parentByEmail;
 
+    @Value("${spring.queries.child-username}")
+    String childByName;
+
 
 //            = "select name, password, active from parent where name like 'tom'";
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
+
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(parentByEmail)
                 .authoritiesByUsernameQuery(rolesByEmail)
                 .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder);
+                .passwordEncoder(passwordEncoder2());
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(parentByName)
                 .authoritiesByUsernameQuery(rolesByUserName)
                 .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder);
+                .passwordEncoder(passwordEncoder2());
     }
 
     @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
         return new MySimpleUrlAuthenticationSuccessHandler();
     }
 
@@ -73,7 +84,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/user/**").hasAuthority("PARENT")
+                .antMatchers("/parent/**").hasAuthority("PARENT")
+                .antMatchers("/child/**").hasAuthority("CHILD")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
 
                 .anyRequest()

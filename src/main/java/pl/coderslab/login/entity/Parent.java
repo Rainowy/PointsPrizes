@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -25,8 +26,8 @@ public class Parent {
     @NotEmpty(message = "*Wpisz email")
     private String email;
     @Column(name = "password")
-    @Length(min = 5, message = "*Twoje hasło musi zawierać przynajmniej 5 znaków")
-    @NotEmpty(message = "*Wpisz hasło")
+//    @Length(min = 5, message = "*Twoje hasło musi zawierać przynajmniej 5 znaków")
+//    @NotEmpty(message = "*Wpisz hasło")
     private String password;
     @Column(name = "username")
     @NotEmpty(message = "*Wpisz imię")
@@ -43,4 +44,6 @@ public class Parent {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Child> children = new ArrayList<>();
+
+
 }

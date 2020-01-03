@@ -111,8 +111,8 @@ public class LoginController {
 //        modelAndView.setViewName("user/home");
 //        return modelAndView;
 //    }
-    @GetMapping("/user/panel")
-    public ModelAndView user(@AuthenticationPrincipal Principal parent) {
+    @GetMapping("/parent/panel")
+    public ModelAndView parent(@AuthenticationPrincipal Principal parent) {
         ModelAndView modelAndView = new ModelAndView();
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        System.out.println(auth.getName());
@@ -122,8 +122,17 @@ public class LoginController {
 //        Parent parent = parentService.findParentByName(auth.get);
         modelAndView.addObject("userName", "Welcome " + parent);
 //        + " " +get + " (" + parent.getEmail() + ")");
-        modelAndView.addObject("admineMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("user/user-panel");
+        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
+        modelAndView.setViewName("parent/parent-panel");
+        return modelAndView;
+    }
+    @GetMapping("/child/panel")
+    public ModelAndView child(@AuthenticationPrincipal Principal child) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("userName", "Welcome " + child);
+//        + " " +get + " (" + parent.getEmail() + ")");
+        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
+        modelAndView.setViewName("child/child-panel");
         return modelAndView;
     }
 

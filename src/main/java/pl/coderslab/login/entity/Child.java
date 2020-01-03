@@ -25,7 +25,7 @@ public class Child {
     @Length(min = 5, message = "*Twoje hasło musi zawierać przynajmniej 5 znaków")
     @NotEmpty(message = "*Wpisz hasło")
     private String password;
-    @Column(name = "name")
+    @Column(name = "username")
     @NotEmpty(message = "*Wpisz imię")
     private String name;
     @Column(name = "last_name")

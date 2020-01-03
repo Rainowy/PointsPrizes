@@ -1,12 +1,16 @@
 //package pl.coderslab.login.service;
 //
+////package com.gpch.login.service;
 //
+////import com.gpch.login.model.User;
+////import com.gpch.login.repository.RoleRepository;
+////import com.gpch.login.repository.UserRepository;
 //import org.junit.Before;
 //import org.junit.Test;
 //import org.mockito.Mock;
 //import org.mockito.Mockito;
+//import org.springframework.security.core.userdetails.User;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import pl.coderslab.login.entity.User;
 //import pl.coderslab.login.repository.RoleRepository;
 //import pl.coderslab.login.repository.UserRepository;
 //
@@ -33,6 +37,7 @@
 //        userServiceUnderTest = new UserService(mockUserRepository,
 //                mockRoleRepository,
 //                mockBCryptPasswordEncoder);
+//
 //        user = User.builder()
 //                .id(1)
 //                .name("Gustavo")
@@ -42,31 +47,31 @@
 //
 //        Mockito.when(mockUserRepository.save(any()))
 //                .thenReturn(user);
-//        Mockito.when(mockUserRepository.findByEmail(anyString()))
-//                .thenReturn(user);
+////        Mockito.when(mockUserRepository.findByEmail(anyString()))
+////                .thenReturn(user);
 //    }
 //
-//    @Test
-//    public void testFindUserByEmail() {
-//        // Setup
-//        final String email = "test@test.com";
-//
-//        // Run the test
-//        final User result = userServiceUnderTest.findUserByEmail(email);
-//
-//        // Verify the results
-//        assertEquals(email, result.getEmail());
-//    }
-//
-//////    @Test
-//////    public void testSaveUser() {
-//////        // Setup
-//////        final String email = "test@test.com";
-//////
-//////        // Run the test
-//////        User result = userServiceUnderTest.saveUser(User.builder().build());
-//////
-//////        // Verify the results
-//////        assertEquals(email, result.getEmail());
-//////    }
-////}
+////    @Test
+////    public void testFindUserByEmail() {
+////        // Setup
+////        final String email = "test@test.com";
+////
+////        // Run the test
+////        final User result = userServiceUnderTest.findUserByEmail(email);
+////
+////        // Verify the results
+////        assertEquals(email, result.getEmail());
+////    }
+////
+////    @Test
+////    public void testSaveUser() {
+////        // Setup
+////        final String email = "test@test.com";
+////
+////        // Run the test
+////        User result = userServiceUnderTest.saveUser(User.builder().build());
+////
+////        // Verify the results
+////        assertEquals(email, result.getEmail());
+////    }
+//}
