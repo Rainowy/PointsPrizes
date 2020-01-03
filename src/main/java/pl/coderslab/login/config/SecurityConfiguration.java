@@ -38,6 +38,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.queries.roles-username-child}")
     private String rolesByUserNameChild;
 
+    @Value("${spring.queries.roles-email-child}")
+    private String rolesByEmailChild;
+
     @Value("${spring.queries.parent-username}")
     String parentByName;
 
@@ -70,7 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(childByEmail)
-                .authoritiesByUsernameQuery(rolesByEmail)
+                .authoritiesByUsernameQuery(rolesByEmailChild)
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
         auth.
