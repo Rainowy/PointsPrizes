@@ -29,11 +29,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.queries.parents-query}")
     private String parentsQuery;
 
-    @Value("${spring.queries.roles-email}")
-    private String rolesByEmail;
+    @Value("${spring.queries.roles-email-parent}")
+    private String rolesByEmailParent;
 
-    @Value("${spring.queries.roles-username}")
-    private String rolesByUserName;
+    @Value("${spring.queries.roles-username-parent}")
+    private String rolesByUserNameParent;
 
     @Value("${spring.queries.roles-username-child}")
     private String rolesByUserNameChild;
@@ -61,15 +61,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(parentByEmail)
-                .authoritiesByUsernameQuery(rolesByEmail)
+                .authoritiesByUsernameQuery(rolesByEmailParent)
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
-        auth.
-                jdbcAuthentication()
-                .usersByUsernameQuery(parentByName)
-                .authoritiesByUsernameQuery(rolesByUserName)
-                .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder);
+//        auth.
+//                jdbcAuthentication()
+//                .usersByUsernameQuery(parentByName)
+//                .authoritiesByUsernameQuery(rolesByUserNameParent)
+//                .dataSource(dataSource)
+//                .passwordEncoder(bCryptPasswordEncoder);
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(childByEmail)

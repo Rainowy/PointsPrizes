@@ -12,5 +12,5 @@ public class LoginApplication {
 	}
 
 	//TODO kasowanie dziecka kasuje wpis w child_role
-	//TODO logowanie za pomocą dziecka
+
 }

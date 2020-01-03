@@ -45,5 +45,15 @@ public class Parent {
             orphanRemoval = true)
     private List<Child> children = new ArrayList<>();
 
+    /**Synchro methods*/
+    public void addChild(Child child){
+        children.add(child);
+        child.setParent(this);
+    }
+    public void removeChild(Child child){
+        children.remove(child);
+        child.setParent(null);
+    }
+    /***/
 
 }

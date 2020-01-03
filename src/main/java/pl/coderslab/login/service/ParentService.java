@@ -1,6 +1,9 @@
 package pl.coderslab.login.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.coderslab.login.entity.Child;
@@ -11,6 +14,7 @@ import pl.coderslab.login.repository.ParentRepository;
 import pl.coderslab.login.repository.RoleRepository;
 import pl.coderslab.login.repository.UserRepository;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -21,13 +25,13 @@ import java.util.HashSet;
 @Service("parentService")
 public class ParentService {
 
-    private ChildRepository childRepository;
+//    private ChildRepository childRepository;
     private ParentRepository parentRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public ParentService(ChildRepository childRepository, ParentRepository parentRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.childRepository = childRepository;
+//        this.childRepository = childRepository;
         this.parentRepository = parentRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -37,8 +41,7 @@ public class ParentService {
         return parentRepository.findByEmail(email);
     }
 
-    public Parent findParentByName(String name)
-    {
+    public Parent findParentByName(String name) {
         return parentRepository.findParentByName(name);
     }
 
@@ -50,11 +53,15 @@ public class ParentService {
         parentRepository.save(parent);
     }
 
-    public void saveChild(Child child){
+    public void saveChild(Child child) {
         child.setPassword(bCryptPasswordEncoder.encode(child.getPassword()));
         child.setActive(1);
         Role userRole = roleRepository.findByRole("CHILD");
         child.setRoles(new HashSet<>(Arrays.asList(userRole)));
-        childRepository.save(child);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Parent parent = findParentByEmail(auth.getName());
+        parent.addChild(child);
+        child.setParent(parent);
+        parentRepository.save(parent);
     }
 }
