@@ -17,6 +17,7 @@ import pl.coderslab.login.repository.UserRepository;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 //public class ParentService {
 //}
@@ -25,16 +26,20 @@ import java.util.HashSet;
 @Service("parentService")
 public class ParentService {
 
-//    private ChildRepository childRepository;
+    private ChildRepository childRepository;
     private ParentRepository parentRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public ParentService(ChildRepository childRepository, ParentRepository parentRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-//        this.childRepository = childRepository;
+        this.childRepository = childRepository;
         this.parentRepository = parentRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+    public Parent getCurrentParent(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return findParentByEmail(auth.getName());
     }
 
     public Parent findParentByEmail(String email) {
@@ -63,5 +68,9 @@ public class ParentService {
         parent.addChild(child);
         child.setParent(parent);
         parentRepository.save(parent);
+    }
+
+    public List<Child> findAllChildrenByParent(int id){
+        return childRepository.findAllByParentId(id);
     }
 }

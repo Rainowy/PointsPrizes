@@ -18,6 +18,24 @@
                 type="Submit">Logout
         </button>
     </form>
+    <h2>Twoje dzieci</h2>
+    <table>
+        <thead>
+        <tr>
+            <th> Imię </th>
+            <th> Wiek </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${children.empty}">
+            <td colspan="2"> Brak zarejestrowanych dzieci </td>
+        </tr>
+        <tr th:each="child : ${children}">
+            <td><span th:text="${child.getName()}"> Imię </span></td>
+            <td><span th:text="${child.getAge()}"> Wiek </span></td>
+        </tr>
+        </tbody>
+    </table>
 
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">

@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.coderslab.login.entity.Child;
+import pl.coderslab.login.service.ChildService;
 import pl.coderslab.login.service.ParentService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/parent")
@@ -36,6 +38,8 @@ public class ParentController {
             return modelAndView;
         }
         parentService.saveChild(child);
+        List<Child> allChildrenByParent = parentService.findAllChildrenByParent(parentService.getCurrentParent().getId());
+        modelAndView.addObject("children",allChildrenByParent);
         modelAndView.setViewName("parent/parent-panel");
         return modelAndView;
     }
