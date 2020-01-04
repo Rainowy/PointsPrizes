@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ChildRepository extends JpaRepository<Child,Long> {
 List<Child> findAllByParentId(int id);
+
+    Child findById(int id);
 }

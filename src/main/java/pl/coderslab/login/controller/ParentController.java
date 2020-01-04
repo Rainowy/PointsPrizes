@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +21,9 @@ public class ParentController {
 
     @Autowired
     private ParentService parentService;
+
+    @Autowired
+    private ChildService childService;
 
     @GetMapping("/addChild")
     public ModelAndView addChild() {
@@ -43,4 +47,13 @@ public class ParentController {
         modelAndView.setViewName("parent/parent-panel");
         return modelAndView;
     }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView editChild(@PathVariable int id){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("child", childService.findById(id));
+        modelAndView.setViewName("parent/addChild");
+        return modelAndView;
+    }
+
 }

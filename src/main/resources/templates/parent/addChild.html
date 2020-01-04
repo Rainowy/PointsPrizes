@@ -19,6 +19,7 @@
             <form autocomplete="off" action="#" th:action="@{/parent/addChild}"
                   th:object="${child}" method="post" class="form-horizontal"
                   role="form">
+                <input type="hidden" th:value="${child.getId()}"  name="id" />
                 <h2>Podaj dane swojego dziecka</h2>
                 <div class="form-group">
                     <div class="col-sm-9">

@@ -24,6 +24,7 @@
         <tr>
             <th> Imię </th>
             <th> Wiek </th>
+            <th>Akcje</th>
         </tr>
         </thead>
         <tbody>
@@ -33,6 +34,8 @@
         <tr th:each="child : ${children}">
             <td><span th:text="${child.getName()}"> Imię </span></td>
             <td><span th:text="${child.getAge()}"> Wiek </span></td>
+            <td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>
+            <a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>
         </tr>
         </tbody>
     </table>
