@@ -15,7 +15,7 @@ public class ChildService {
         this.childRepository = childRepository;
     }
 
-    public Child findById(int id){
+    public Child findById(int id) {
         return childRepository.findById(id);
     }
 }

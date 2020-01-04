@@ -14,6 +14,7 @@ import pl.coderslab.login.repository.ParentRepository;
 import pl.coderslab.login.repository.RoleRepository;
 import pl.coderslab.login.repository.UserRepository;
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -22,7 +23,7 @@ import java.util.List;
 //public class ParentService {
 //}
 
-
+@Transactional
 @Service("parentService")
 public class ParentService {
 
@@ -62,15 +63,25 @@ public class ParentService {
         child.setPassword(bCryptPasswordEncoder.encode(child.getPassword()));
         child.setActive(1);
         Role userRole = roleRepository.findByRole("CHILD");
+        System.out.println("ROLA to " + userRole);
         child.setRoles(new HashSet<>(Arrays.asList(userRole)));
+        System.out.println(child.getRoles());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Parent parent = findParentByEmail(auth.getName());
         parent.addChild(child);
         child.setParent(parent);
         parentRepository.save(parent);
+//        childRepository.save(child);
     }
 
     public List<Child> findAllChildrenByParent(int id){
         return childRepository.findAllByParentId(id);
+    }
+
+    public void deleteChild(int id){
+        Child childToDelete = childRepository.findById(id);
+        Parent currentParent = getCurrentParent();
+        currentParent.removeChild(childToDelete);
+        childRepository.deleteById(id);
     }
 }

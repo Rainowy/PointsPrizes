@@ -37,7 +37,8 @@ public class Child {
     private int age;
     @Column(name = "active")
     private int active;
-    @ManyToMany(cascade = CascadeType.ALL)
+//    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "child_role", joinColumns = @JoinColumn(name = "child_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
     @ManyToOne(fetch = FetchType.LAZY)

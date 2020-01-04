@@ -55,5 +55,15 @@ public class ParentController {
         modelAndView.setViewName("parent/addChild");
         return modelAndView;
     }
+    //TODO allchildByParent to @ModelAttribute
 
+    @GetMapping("/delete/{id}")
+    public ModelAndView deleteChild(@PathVariable int id){
+        ModelAndView modelAndView = new ModelAndView();
+        parentService.deleteChild(id);
+        List<Child> allChildrenByParent = parentService.findAllChildrenByParent(parentService.getCurrentParent().getId());
+        modelAndView.addObject("children",allChildrenByParent);
+        modelAndView.setViewName("/parent/parent-panel");
+        return modelAndView;
+    }
 }
