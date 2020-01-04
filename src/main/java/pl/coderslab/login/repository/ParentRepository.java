@@ -6,6 +6,7 @@ import pl.coderslab.login.entity.Parent;
 
 @Repository
 public interface ParentRepository extends JpaRepository<Parent, Long> {
+
     Parent findByEmail(String email);
 
     Parent findByName(String name);

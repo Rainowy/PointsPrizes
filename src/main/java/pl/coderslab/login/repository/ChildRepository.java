@@ -14,4 +14,8 @@ List<Child> findAllByParentId(int id);
     Child findById(int id);
 
     Child deleteById(int id);
+
+    Child findByEmail(String email);
+
+    Child findByName(String name);
 }

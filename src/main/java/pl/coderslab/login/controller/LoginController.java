@@ -119,17 +119,19 @@ public class LoginController {
         List<Child> allChildrenByParent = parentService.findAllChildrenByParent(parent.getId());
         modelAndView.addObject("children",allChildrenByParent);
 
-        modelAndView.addObject("userName", "Welcome " + parent.getName());
+//        modelAndView.addObject("userName", "Welcome " + parent.getName());
 //        + " " + parent.getName() + " (" + parent.getEmail() + ")");
 //        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
+        modelAndView.addObject("userName", "Welcome " + parent.getName() + " " + parent.getLastName() + " (" + parent.getEmail() + ")");
         modelAndView.setViewName("parent/parent-panel");
         return modelAndView;
     }
     @GetMapping("/child/panel")
     public ModelAndView child(@AuthenticationPrincipal Principal child) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("userName", "Welcome " + child);
+        modelAndView.addObject("userName", "Welcome " + child.getName());
 //        + " " +get + " (" + parent.getEmail() + ")");
+
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("child/child-panel");
         return modelAndView;

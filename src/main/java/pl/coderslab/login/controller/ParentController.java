@@ -3,10 +3,7 @@ package pl.coderslab.login.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.coderslab.login.entity.Child;
 import pl.coderslab.login.service.ChildService;
@@ -42,8 +39,7 @@ public class ParentController {
             return modelAndView;
         }
         parentService.saveChild(child);
-        List<Child> allChildrenByParent = parentService.findAllChildrenByParent(parentService.getCurrentParent().getId());
-        modelAndView.addObject("children",allChildrenByParent);
+        modelAndView.addObject("children",parentService.findAllChildrenByParent());
         modelAndView.setViewName("parent/parent-panel");
         return modelAndView;
     }
@@ -55,14 +51,13 @@ public class ParentController {
         modelAndView.setViewName("parent/addChild");
         return modelAndView;
     }
-    //TODO allchildByParent to @ModelAttribute
 
     @GetMapping("/delete/{id}")
     public ModelAndView deleteChild(@PathVariable int id){
         ModelAndView modelAndView = new ModelAndView();
         parentService.deleteChild(id);
-        List<Child> allChildrenByParent = parentService.findAllChildrenByParent(parentService.getCurrentParent().getId());
-        modelAndView.addObject("children",allChildrenByParent);
+        modelAndView.addObject("children",parentService.findAllChildrenByParent());
+        modelAndView.addObject("adminMessage","Usunięto");
         modelAndView.setViewName("/parent/parent-panel");
         return modelAndView;
     }
