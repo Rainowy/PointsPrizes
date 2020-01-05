@@ -55,27 +55,25 @@ public class ParentService {
      return findAllChildrenByParent(getCurrentParent().getId());
     }
 
-    public void saveParent(Parent parent) {
+    public Parent saveParent(Parent parent) {
         parent.setPassword(bCryptPasswordEncoder.encode(parent.getPassword()));
         parent.setActive(1);
         Role userRole = roleRepository.findByRole("PARENT");
         parent.setRoles(new HashSet<>(Arrays.asList(userRole)));
-        parentRepository.save(parent);
+        return parentRepository.save(parent);
     }
 
-    public void saveChild(Child child) {
+    public Parent saveChild(Child child) {
         child.setPassword(bCryptPasswordEncoder.encode(child.getPassword()));
         child.setActive(1);
         Role userRole = roleRepository.findByRole("CHILD");
-        System.out.println("ROLA to " + userRole);
         child.setRoles(new HashSet<>(Arrays.asList(userRole)));
-        System.out.println(child.getRoles());
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Parent parent = findParentByEmail(auth.getName());
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        Parent parent = findParentByEmail(auth.getName());
+        Parent parent = getCurrentParent();
         parent.addChild(child);
         child.setParent(parent);
-        parentRepository.save(parent);
-//        childRepository.save(child);
+        return parentRepository.save(parent);
     }
 
     public List<Child> findAllChildrenByParent(int id){

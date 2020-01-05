@@ -32,7 +32,7 @@ public class User {
     @NotEmpty(message = "*Please provide your password")
     private String password;
     @Column(name = "name")
-    @NotEmpty(message = "*Please provide your name")
+//    @NotEmpty(message = "*Please provide your dupa")
     private String name;
     @Column(name = "last_name")
     @NotEmpty(message = "*Please provide your last name")

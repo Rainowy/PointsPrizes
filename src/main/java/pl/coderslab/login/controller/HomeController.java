@@ -13,5 +13,4 @@ public class HomeController {
         modelAndView.setViewName("home");
         return modelAndView;
     }
-
 }
