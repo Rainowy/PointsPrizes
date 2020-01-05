@@ -39,6 +39,14 @@ public class ChildService {
         return childRepository.findById(id);
     }
 
+    public Child findChildrenByEmail(String email){
+        return childRepository.findByEmail(email);
+    }
+
+    public Child findChildrenByName(String name){
+        return childRepository.findByName(name);
+    }
+
     public Child saveChild(Child child) {
         child.setPassword(bCryptPasswordEncoder.encode(child.getPassword()));
         child.setActive(1);
@@ -57,4 +65,6 @@ public class ChildService {
             return childRepository.findByEmail(credential);
         } else return childRepository.findByName(credential);
     }
+
+
 }

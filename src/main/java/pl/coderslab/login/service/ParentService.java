@@ -68,8 +68,6 @@ public class ParentService {
         child.setActive(1);
         Role userRole = roleRepository.findByRole("CHILD");
         child.setRoles(new HashSet<>(Arrays.asList(userRole)));
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        Parent parent = findParentByEmail(auth.getName());
         Parent parent = getCurrentParent();
         parent.addChild(child);
         child.setParent(parent);
