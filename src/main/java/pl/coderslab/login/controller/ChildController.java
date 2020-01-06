@@ -30,6 +30,9 @@ public class ChildController {
     @PostMapping("/edit")
     public ModelAndView editChild(@Valid Child child, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
+
+        childService.existenceValidator(child, result);
+
         if (result.hasErrors()) {
             modelAndView.setViewName("child/editProfile");
             return modelAndView;
@@ -38,4 +41,20 @@ public class ChildController {
         modelAndView.setViewName("child/child-panel");
         return modelAndView;
     }
+
+//    private void existenceValidator(@Valid Child child, BindingResult result) {
+//        if (child.getId() != 0) {
+//            Child childById = childService.findById(child.getId());
+//            if (!childById.getEmail().equals(child.getEmail())) {
+//                if (childService.findChildrenByEmail(child.getEmail()) != null) {
+//                    result.rejectValue("email", "error.user", "Istnieje już osoba o podanym emailu");
+//                }
+//            }
+//            if (!childById.getName().equals(child.getName())) {
+//                if (childService.findChildrenByName(child.getName()) != null) {
+//                    result.rejectValue("name", "error.user", "Istnieje już osoba o podanym imieniu");
+//                }
+//            }
+//        }
+//    }
 }

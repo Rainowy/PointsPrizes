@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import pl.coderslab.login.entity.Child;
 import pl.coderslab.login.entity.Parent;
@@ -14,6 +15,7 @@ import pl.coderslab.login.repository.RoleRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -39,11 +41,11 @@ public class ChildService {
         return childRepository.findById(id);
     }
 
-    public Child findChildrenByEmail(String email){
+    public Child findChildrenByEmail(String email) {
         return childRepository.findByEmail(email);
     }
 
-    public Child findChildrenByName(String name){
+    public Child findChildrenByName(String name) {
         return childRepository.findByName(name);
     }
 
@@ -66,5 +68,28 @@ public class ChildService {
         } else return childRepository.findByName(credential);
     }
 
-
+    //TODO change this into smth. nicer
+    public void existenceValidator(@Valid Child child, BindingResult result) {
+        if (child.getId() == 0) {
+            if (findChildrenByEmail(child.getEmail()) != null) {
+                result.rejectValue("email", "error.user", "Istnieje już osoba o podanym emailu");
+            }
+            if (findChildrenByName(child.getName()) != null) {
+                result.rejectValue("name", "error.user", "Istnieje już osoba o podanym imieniu");
+            }
+        }
+        if (child.getId() != 0) {
+            Child childById = findById(child.getId());
+            if (!childById.getEmail().equals(child.getEmail())) {
+                if (findChildrenByEmail(child.getEmail()) != null) {
+                    result.rejectValue("email", "error.user", "Istnieje już osoba o podanym emailu");
+                }
+            }
+            if (!childById.getName().equals(child.getName())) {
+                if (findChildrenByName(child.getName()) != null) {
+                    result.rejectValue("name", "error.user", "Istnieje już osoba o podanym imieniu");
+                }
+            }
+        }
+    }
 }

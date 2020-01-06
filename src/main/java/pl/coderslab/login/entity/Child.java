@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+//import pl.coderslab.login.validation.EmailExistsConstraintValidator;
+//import pl.coderslab.login.validation.EmailExistsConstraint;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -27,6 +29,7 @@ public class Child {
     @Column(name = "email")
     @Email(message = "*Jeżeli posiadasz, wpisz email")
 //    @NotEmpty(message = "*Wpisz email")
+//    @EmailExistsConstraint
     private String email;
     @Column(name = "password")
     @Length(min = 5, message = "*Twoje hasło musi zawierać przynajmniej 5 znaków")

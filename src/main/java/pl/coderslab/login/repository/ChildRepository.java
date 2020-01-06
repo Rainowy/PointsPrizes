@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.coderslab.login.entity.Child;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -14,6 +15,8 @@ List<Child> findAllByParentId(int id);
     Child findById(int id);
 
     Child deleteById(int id);
+
+    Optional<Child> findChildByEmail(String email);
 
     Child findByEmail(String email);
 
