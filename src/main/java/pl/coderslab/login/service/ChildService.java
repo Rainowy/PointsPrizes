@@ -7,12 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import pl.coderslab.login.entity.Child;
-import pl.coderslab.login.entity.Exercise;
-import pl.coderslab.login.entity.Parent;
-import pl.coderslab.login.entity.Role;
+import pl.coderslab.login.entity.*;
 import pl.coderslab.login.repository.ChildRepository;
 import pl.coderslab.login.repository.ExerciseRepository;
+import pl.coderslab.login.repository.GoalRepository;
 import pl.coderslab.login.repository.RoleRepository;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,14 +27,17 @@ public class ChildService {
 
     private RoleRepository roleRepository;
 
+    private GoalRepository goalRepository;
+
     private ChildRepository childRepository;
 
     private ExerciseRepository exerciseRepository;
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public ChildService(RoleRepository roleRepository, ChildRepository childRepository, ExerciseRepository exerciseRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public ChildService(RoleRepository roleRepository, GoalRepository goalRepository, ChildRepository childRepository, ExerciseRepository exerciseRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.roleRepository = roleRepository;
+        this.goalRepository = goalRepository;
         this.childRepository = childRepository;
         this.exerciseRepository = exerciseRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -72,8 +73,12 @@ public class ChildService {
             return childRepository.findByEmail(credential);
         } else return childRepository.findByName(credential);
     }
-    public List<Exercise> findAllById(int id){
+    public List<Exercise> findExercisesByChildId(int id){
         return exerciseRepository.findAllByChildId(id);
+    }
+
+    public List<Goal> findGoalsByChildId(int id){
+        return goalRepository.findAllByChildId(id);
     }
 
 

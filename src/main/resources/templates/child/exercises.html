@@ -17,7 +17,7 @@
     <!--no-repeat center center fixed;-->
     <!--}-->
 <!--</style>-->
-<body th:style="'background:url('+ @{/image/Border3.jpg} +');'">
+<!--<body th:style="'background:url('+ @{/image/Border3.jpg} +');'">-->
 
 </body>
 <table class="responstable">
@@ -53,17 +53,20 @@
     </tbody>
 </table>
 
-<a href="/views/addExercise.jsp">
+<!--<a href="/views/addExercise.jsp">-->
+<a th:href="@{'/child/addExercise/'}">
     <button>Dodaj Zadanie</button>
 </a>
-<a href="/views/addGoal.jsp">
+<!--<a href="/views/addGoal.jsp">-->
+<a th:href="@{'/child/addGoal/'}">
     <button>Dodaj Cel</button>
 </a>
-<a href="/views/showGoals.jsp">
+<!--<a href="/views/showGoals.jsp">-->
+<a th:href="@{'/child/goals/'}">
     <button>Moje cele</button>
 </a>
 
-<form action="/LogoutServlet" method="post">
+<form th:action="@{/logout}" method="get">
     <button type="submit" name="your_name" value="your_value" class="btn-link">Wyloguj</button>
 </form>
 

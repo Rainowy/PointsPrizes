@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/buttons.css}"/>
+
+</head>
+<body>
+<table class="responstable">
+
+    <thead>
+    <tr>
+        <th>Nazwa celu</th>
+        <th>Opis celu</th>
+        <th>Utworzono</th>
+        <th>Liczba punktów</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="goal : ${goals}">
+        <td><span th:text="${goal.getName()}"></span></td>
+        <td><span th:text="${goal.getDescription()}"></span></td>
+        <td><span th:text="${goal.getCreated()}"></span></td>
+        <td><span th:text="${goal.getPoints()}"></span></td>
+        <!--<td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>-->
+        <!--<a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>-->
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{'/child/exercises/'}">
+    <button>Powrót</button>
+</a>
+<form th:action="@{/logout}" method="get">
+    <button type="submit" name="your_name" value="your_value" class="btn-link">Wyloguj</button>
+</form>
+</body>
+</html>

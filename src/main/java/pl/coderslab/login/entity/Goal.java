@@ -17,15 +17,16 @@ public class Goal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "goal_id")
     private int id;
-//    @Column(name= "name")
     private String name;
-//    @Column(name = "descri")
     @NotEmpty
     @Size(min=10)
     private String description;
 
     private LocalDateTime created;
     private LocalDateTime updated;
+
+    @Column(name = "goals_points")
+    private int points;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "child_id")
