@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.coderslab.login.entity.Child;
+import pl.coderslab.login.entity.Exercise;
 import pl.coderslab.login.entity.Goal;
 import pl.coderslab.login.entity.Parent;
 import pl.coderslab.login.service.ChildService;
@@ -29,6 +30,7 @@ public class ChildController {
         modelAndView.setViewName("child/editProfile");
         return modelAndView;
     }
+
     @PostMapping("/edit")
     public ModelAndView editChild(@Valid Child child, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
@@ -45,32 +47,32 @@ public class ChildController {
     }
 
     @GetMapping("/exercises")
-    public ModelAndView exercises(){
+    public ModelAndView exercises() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("exercises",childService.findExercisesByChildId(childService.getCurrentChild().getId()));
+        modelAndView.addObject("exercises", childService.findExercisesByChildId(childService.getCurrentChild().getId()));
         modelAndView.setViewName("child/exercises");
         return modelAndView;
     }
 
     @GetMapping("/goals")
-    public ModelAndView goals(){
+    public ModelAndView goals() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("goals",childService.findGoalsByChildId(childService.getCurrentChild().getId()));
+        modelAndView.addObject("goals", childService.findGoalsByChildId(childService.getCurrentChild().getId()));
         modelAndView.setViewName("child/goals");
         return modelAndView;
     }
 
     @GetMapping("/addGoal")
-    public ModelAndView addGoal(){
+    public ModelAndView addGoal() {
         ModelAndView modelAndView = new ModelAndView();
         Goal goal = new Goal();
-        modelAndView.addObject("goal",goal);
+        modelAndView.addObject("goal", goal);
         modelAndView.setViewName("child/addGoal");
         return modelAndView;
     }
 
     @PostMapping("/addGoal")
-    public ModelAndView addGoal(@Valid Goal goal, BindingResult result){
+    public ModelAndView addGoal(@Valid Goal goal, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
 
         if (result.hasErrors()) {
@@ -78,14 +80,17 @@ public class ChildController {
             return modelAndView;
         }
         childService.saveChild(goal);
-//        Child currentChild = childService.getCurrentChild();
-//
-//        goal.setChild(currentChild);
-//        childService.saveChild(currentChild);
-//        System.out.println(goal);
-
-
+        modelAndView.addObject("successMessage", "Cel został dodany");
         modelAndView.setViewName("child/addGoal");
+        return modelAndView;
+    }
+
+    @GetMapping("/addExercise")
+    public ModelAndView addExercise(){
+        ModelAndView modelAndView = new ModelAndView();
+        Exercise exercise = new Exercise();
+        modelAndView.addObject("exercise", exercise);
+        modelAndView.setViewName("child/addExercise");
         return modelAndView;
     }
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Add Goal</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}"/>
-     <!--<link rel="stylesheet" type="text/css" th:href="@{/css/buttons.css}"/>-->
+    <!--<link rel="stylesheet" type="text/css" th:href="@{/css/buttons.css}"/>-->
 </head>
 <body>
 
@@ -16,28 +16,24 @@
             <legend><span class="number">1</span>Nazwa Celu</legend>
             <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
                    class="validation-message"></label>
-            <!--<input type="text" name="field1" required placeholder="Nazwa Celu *">-->
             <input type="text" th:field="*{name}" placeholder="Nazwa"/>
             <legend><span class="number">2</span>Opis Celu</legend>
             <label th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
                    class="validation-message"></label>
-            <!--<textarea name="field5" class="textarea-field" rows="12"-->
-                      <!--placeholder="Opis celu"-->
-                      <!--th:inline="text">[${Notes}]]-->
-<!--</textarea>-->
-            <textarea name="field5" class="textarea-field" rows="12"  placeholder="Opis" th:field="*{description}"></textarea>
-            <!--<textarea name="field5" class="textarea-field" id="field5" minlength="30" required placeholder="Opis Celu *"></textarea></label-->
-            <!--<input type="area" th:field="*{name}" placeholder="Imię"-->
-            <!--class="form-control"/>-->
+            <textarea name="field5" class="textarea-field" rows="12" placeholder="Opis"
+                      th:field="*{description}"></textarea>
+
             <label><span> </span><input type="submit" value="Wyślij"/></label>
-            <!--<input type="hidden" name="fromExercise" value=${flag}>-->
         </fieldset>
     </form>
+</div>
+<span th:utext="${successMessage}"></span>
+</div>
 </div>
 </body>
 </html>
 
 <!--<textarea name="field5" class="textarea-field" rows="12"-->
-          <!--placeholder="Opis celu"-->
-           <!--th:inline="text">[[${Notes}]]-->
+<!--placeholder="Opis celu"-->
+<!--th:inline="text">[[${Notes}]]-->
 <!--</textarea>-->

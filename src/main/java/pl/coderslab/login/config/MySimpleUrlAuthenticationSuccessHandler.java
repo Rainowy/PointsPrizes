@@ -45,7 +45,6 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
     }
 
     protected String determineTargetUrl(Authentication authentication) {
-//        boolean isUser = false;
         boolean isParent = false;
         boolean isChild = false;
         boolean isAdmin = false;

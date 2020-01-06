@@ -34,37 +34,6 @@ public class LoginController {
         return modelAndView;
     }
 
-
-//    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-//    public ModelAndView registration() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        User user = new User();
-//        modelAndView.addObject("user", user);
-//        modelAndView.setViewName("registration");
-//        return modelAndView;
-//    }
-//
-//    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-//    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        User userExists = userService.findUserByEmail(user.getEmail());
-//        if (userExists != null) {
-//            bindingResult
-//                    .rejectValue("email", "error.user",
-//                            "There is already a user registered with the email provided");
-//        }
-//        if (bindingResult.hasErrors()) {
-//            modelAndView.setViewName("registration");
-//        } else {
-//            userService.saveUser(user);
-//            modelAndView.addObject("successMessage", "User has been registered successfully");
-//            modelAndView.addObject("user", new User());
-//            modelAndView.setViewName("registration");
-//
-//        }
-//        return modelAndView;
-//    }
-
     /**
      * register parent
      */
@@ -99,25 +68,13 @@ public class LoginController {
         return modelAndView;
     }
 
-
-    //    @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
-//    @GetMapping("/user/home")
-//    public ModelAndView user() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = userService.findUserByEmail(auth.getName());
-//        modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-////        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-//        modelAndView.setViewName("user/home");
-//        return modelAndView;
-//    }
     @GetMapping("/parent/panel")
-    public ModelAndView parent(){
+    public ModelAndView parent() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Parent parent = parentService.findParentByEmail(auth.getName());
         List<Child> allChildrenByParent = parentService.findAllChildrenByParent(parent.getId());
-        modelAndView.addObject("children",allChildrenByParent);
+        modelAndView.addObject("children", allChildrenByParent);
 
 //        modelAndView.addObject("userName", "Welcome " + parent.getName());
 //        + " " + parent.getName() + " (" + parent.getEmail() + ")");
@@ -126,6 +83,7 @@ public class LoginController {
         modelAndView.setViewName("parent/parent-panel");
         return modelAndView;
     }
+
     @GetMapping("/child/panel")
     public ModelAndView child(@AuthenticationPrincipal Principal child) {
         ModelAndView modelAndView = new ModelAndView();
@@ -136,16 +94,4 @@ public class LoginController {
         modelAndView.setViewName("child/child-panel");
         return modelAndView;
     }
-
-//    @GetMapping("/admin/panel")
-//    public ModelAndView admin() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//
-//        User user = userService.findUserByEmail(auth.getName());
-//        modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-//        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-//        modelAndView.setViewName("admin/admin-panel");
-//        return modelAndView;
-//    }
 }
