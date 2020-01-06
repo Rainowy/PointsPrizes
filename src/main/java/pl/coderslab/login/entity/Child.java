@@ -12,6 +12,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -46,6 +48,8 @@ public class Child {
     private int age;
     @Column(name = "active")
     private int active;
+    @Column(name = "points",  nullable = false, columnDefinition = "int default 0")
+    private int points;
 //    @ManyToMany(cascade = CascadeType.ALL)
     @ManyToMany
     @JoinTable(name = "child_role", joinColumns = @JoinColumn(name = "child_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -53,4 +57,14 @@ public class Child {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Parent parent;
+
+    @OneToMany(mappedBy = "child",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Goal> goals = new ArrayList<>();
+
+    @OneToMany(mappedBy = "child",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Exercise> exercises = new ArrayList<>();
 }

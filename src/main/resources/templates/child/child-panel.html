@@ -25,6 +25,13 @@
         </button>
     </form>
 
+    <h2>Tutaj aktualna liczba punktów</h2>
+
+    <form th:action="@{/child/exercise}" method="get">
+        <button class="btn btn-md btn-warning btn-block" type="Submit">Wyświetl zadania</button>
+    </form>
+
+
     <!--<table>-->
         <!--<thead>-->
         <!--<tr>-->
@@ -60,9 +67,7 @@
     </div>
 
 </div>
-<form th:action="@{/parent/addChild}" method="get">
-    <button class="btn btn-md btn-warning btn-block" type="Submit">Dodaj swoje dzieci</button>
-</form>
+
 
 </body>
 </html>

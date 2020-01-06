@@ -42,19 +42,11 @@ public class ChildController {
         return modelAndView;
     }
 
-//    private void existenceValidator(@Valid Child child, BindingResult result) {
-//        if (child.getId() != 0) {
-//            Child childById = childService.findById(child.getId());
-//            if (!childById.getEmail().equals(child.getEmail())) {
-//                if (childService.findChildrenByEmail(child.getEmail()) != null) {
-//                    result.rejectValue("email", "error.user", "Istnieje już osoba o podanym emailu");
-//                }
-//            }
-//            if (!childById.getName().equals(child.getName())) {
-//                if (childService.findChildrenByName(child.getName()) != null) {
-//                    result.rejectValue("name", "error.user", "Istnieje już osoba o podanym imieniu");
-//                }
-//            }
-//        }
-//    }
+    @GetMapping("/exercise")
+    public ModelAndView exercises(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("exercises",childService.findAllById(childService.getCurrentChild().getId()));
+        modelAndView.setViewName("child/exercise");
+        return modelAndView;
+    }
 }
