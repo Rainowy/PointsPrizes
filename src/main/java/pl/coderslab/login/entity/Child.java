@@ -67,4 +67,14 @@ public class Child {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Exercise> exercises = new ArrayList<>();
+
+    /**Synchro methods*/
+    public void addGoal(Goal goal){
+        goals.add(goal);
+        goal.setChild(this);
+    }
+    public void removeGoal(Goal goal){
+        goals.remove(goal);
+        goal.setChild(null);
+    }
 }

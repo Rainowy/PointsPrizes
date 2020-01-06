@@ -61,7 +61,15 @@ public class ChildService {
         Role userRole = roleRepository.findByRole("CHILD");
         child.setRoles(new HashSet<>(Arrays.asList(userRole)));
         child.setParent(getCurrentChild().getParent());
+        child.setGoals(getCurrentChild().getGoals());
         return childRepository.save(child);
+    }
+
+    public Child saveChild(Goal goal){
+        Child currentChild = getCurrentChild();
+        currentChild.addGoal(goal);
+        return childRepository.save(currentChild);
+
     }
 
     public Child getCurrentChild() {

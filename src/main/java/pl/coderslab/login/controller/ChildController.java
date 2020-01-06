@@ -68,4 +68,24 @@ public class ChildController {
         modelAndView.setViewName("child/addGoal");
         return modelAndView;
     }
+
+    @PostMapping("/addGoal")
+    public ModelAndView addGoal(@Valid Goal goal, BindingResult result){
+        ModelAndView modelAndView = new ModelAndView();
+
+        if (result.hasErrors()) {
+            modelAndView.setViewName("child/addGoal");
+            return modelAndView;
+        }
+        childService.saveChild(goal);
+//        Child currentChild = childService.getCurrentChild();
+//
+//        goal.setChild(currentChild);
+//        childService.saveChild(currentChild);
+//        System.out.println(goal);
+
+
+        modelAndView.setViewName("child/addGoal");
+        return modelAndView;
+    }
 }
