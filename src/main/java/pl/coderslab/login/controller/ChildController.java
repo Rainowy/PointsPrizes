@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.login.entity.Child;
 import pl.coderslab.login.entity.Exercise;
 import pl.coderslab.login.entity.Goal;
@@ -19,6 +20,8 @@ import javax.validation.Valid;
 @RequestMapping("/child")
 //@SessionAttributes("childParent")
 public class ChildController {
+
+    private Exercise exercise;
 
     @Autowired
     private ChildService childService;
@@ -63,8 +66,14 @@ public class ChildController {
     }
 
     @GetMapping("/addGoal")
-    public ModelAndView addGoal() {
+    public ModelAndView addGoal(@ModelAttribute("newGoal") String newGoal) {
         ModelAndView modelAndView = new ModelAndView();
+//        if (!newGoal.isEmpty()) {
+//            modelAndView.addObject("newGoal", "true");
+//        }
+//        System.out.println("aaaaa" + newGoal); //jest pusty
+     //tu go ustawia
+        modelAndView.addObject("newGoal",newGoal);
         Goal goal = new Goal();
         modelAndView.addObject("goal", goal);
         modelAndView.setViewName("child/addGoal");
@@ -72,24 +81,66 @@ public class ChildController {
     }
 
     @PostMapping("/addGoal")
-    public ModelAndView addGoal(@Valid Goal goal, BindingResult result) {
+    public ModelAndView addGoal(@Valid Goal goal, BindingResult result,
+                                @RequestParam(required = false) String newGoal) {
         ModelAndView modelAndView = new ModelAndView();
 
         if (result.hasErrors()) {
             modelAndView.setViewName("child/addGoal");
             return modelAndView;
         }
-        childService.saveChild(goal);
-        modelAndView.addObject("successMessage", "Cel został dodany");
-        modelAndView.setViewName("child/addGoal");
+        System.out.println("co tu wypisuje " + newGoal);
+//        if(!newGoal.isEmpty() && newGoal !=null){
+//        if (newGoal != null) { //nie jest null dziaka
+        //jeżeli dodajemy sam cel to tu newGoal jest empty
+        if(newGoal != null && !newGoal.isEmpty()){
+            System.out.println("NOWY GOL");
+            exercise.setGoal(goal);
+            childService.saveChild(exercise);
+        } else {
+            childService.saveChild(goal);
+        }
+//        modelAndView.addObject("successMessage", "Cel został dodany");
+        modelAndView.setViewName("child/exercises");
         return modelAndView;
     }
 
     @GetMapping("/addExercise")
-    public ModelAndView addExercise(){
+    public ModelAndView addExercise() {
         ModelAndView modelAndView = new ModelAndView();
         Exercise exercise = new Exercise();
         modelAndView.addObject("exercise", exercise);
+        modelAndView.addObject("goals", childService.findGoalsByChildId(childService.getCurrentChild().getId()));
+        modelAndView.setViewName("child/addExercise");
+        return modelAndView;
+    }
+
+    @PostMapping("/addExercise")
+    public ModelAndView addExercise(@Valid Exercise exercise, BindingResult result,
+                                    @RequestParam(required = false) String newGoal,
+                                    RedirectAttributes redirectAttributes) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (result.hasErrors()) {
+            modelAndView.setViewName("child/addExercise");
+            modelAndView.addObject("goals", childService.findGoalsByChildId(childService.getCurrentChild().getId()));
+            return modelAndView;
+        }
+        System.out.println("NEW GOAL " + newGoal);
+        if (newGoal == null) {
+            childService.saveChild(exercise);
+        }
+        //TODO atrybut w addGoal nie jest ustawiany bo newGoaL nie jest przesłany do addGoal controlera
+        else {
+            this.exercise = exercise;
+            redirectAttributes.addFlashAttribute("newGoal", "true");
+//            modelAndView.addObject("newGoal","true");
+            modelAndView.setViewName("redirect:/child/addGoal");
+            return modelAndView;
+        }
+
+
+        System.out.println("EXERCISE " + exercise);
+        System.out.println("NEW GOAL " + newGoal);
         modelAndView.setViewName("child/addExercise");
         return modelAndView;
     }

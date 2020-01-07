@@ -1,10 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Add Exercis</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}"/>
 </head>
 <body>
-<h2>Tu dodawanie zadań będzie</h2>
 </body>
+
+<div class="form-style-5">
+    <form action="#" th:action="@{/child/addExercise}" th:object="${exercise}" method="post">
+        <fieldset>
+            <legend><span class="number">1</span>Dodaj Zadanie</legend>
+            <label th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                   class="validation-message"></label>
+            <input type="text" th:field="*{description}" placeholder="Opis Zadania"/>
+            <label th:if="${#fields.hasErrors('points')}" th:errors="*{points}"
+                   class="validation-message"></label>
+            <input type="number" th:field="*{points}" placeholder="Ilość Punktów"/>
+        </fieldset>
+        <fieldset>
+            <legend><span class="number">2</span>Wybierz Cel do dodania punktów</legend>
+
+            <select th:field="*{goal}">
+                <option value="0">Wybierz Cel</option>
+                <option th:each="goal : ${goals}" th:value="${goal.id}"
+                        th:text="${goal.getName()}"></option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <legend><span class="number">3</span>Zaznacz aby dodać nowy cel</legend>
+            <div class="container">
+                <div class="round">
+                    <input type="checkbox" id="checkbox" name="newGoal" value="true"/>
+                    <label for="checkbox"></label>
+                </div>
+            </div>
+        </fieldset>
+
+        <input type="submit" value="Wyślij"/>
+    </form>
+</div>
+
 </html>
+
+
+            <!--<input-->
+                    <!--type="checkbox"-->
+                    <!--name="myBooleanVariable"-->
+                    <!--th:checked="${myBooleanVariable}"/>-->
+
+
+            <!---->
+        <!--<input type="text" name="exeDesc" placeholder="Opis zadania *" required>-->
+        <!--<input type="number" name="exePoints" placeholder="Ilość punktów *" min="1" max="5" required>-->
+        <!--</fieldset>-->
+        <!--<fieldset>-->
+
+            <!--<legend><span class="number">2</span>Wybierz Cel do dodania punktów</legend>-->
+            <!--<select id="job" name="exeGoal">-->
+                <!--<optgroup label="Cele">-->
+                    <!--c:-->
+                    <!--<c:forEach var="goal" items="${sessionScope.allGoals}">-->
+                        <!--<option value=${goal.getId()}>${goal.getName()}</option>-->
+                    <!--</c:forEach>-->
+                <!--</optgroup>-->
+            <!--</select>-->
+
+        <!--</fieldset>-->
+        <!--<fieldset>-->
+            <!--<legend><span class="number">3</span>Zaznacz by dodać nowy cel</legend>-->
+            <!--<div class="container">-->
+                <!--<div class="round">-->
+                    <!--<input type="checkbox" id="checkbox" name="newGoal" value="true"/>-->
+                    <!--<label for="checkbox"></label>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</fieldset>-->
+
+        <!--<input type="submit" value="Wyślij"/>-->
+    <!--</form>-->
+<!--</div>-->
+
+<!--</html>-->
+
+
+<!--<div class="form-group blu-margin">-->
+    <!--<select class="form-control" th:field="${operator.opeId}" id="dropOperator">-->
+        <!--<option value="0">select operator</option>-->
+        <!--<option th:each="operator : ${operators}" th:value="${operator.id}" th:text="${operator.operatorName}"></option>-->
+    <!--</select>-->
+<!--</div>-->

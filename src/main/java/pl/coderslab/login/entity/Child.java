@@ -1,9 +1,6 @@
 package pl.coderslab.login.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 //import pl.coderslab.login.validation.EmailExistsConstraintValidator;
 //import pl.coderslab.login.validation.EmailExistsConstraint;
@@ -19,7 +16,9 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+//@Data
+@Getter
+@Setter
 @Entity
 //@Table(name = "child")
 public class Child {
@@ -54,6 +53,7 @@ public class Child {
     @ManyToMany
     @JoinTable(name = "child_role", joinColumns = @JoinColumn(name = "child_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Parent parent;
@@ -76,5 +76,15 @@ public class Child {
     public void removeGoal(Goal goal){
         goals.remove(goal);
         goal.setChild(null);
+    }
+
+    public void addExercise(Exercise exercise){
+        exercises.add(exercise);
+        exercise.setChild(this);
+    }
+
+    public void removeExercise(Exercise exercise){
+        exercises.remove(exercise);
+        exercise.setChild(null);
     }
 }

@@ -22,7 +22,7 @@
                    class="validation-message"></label>
             <textarea name="field5" class="textarea-field" rows="12" placeholder="Opis"
                       th:field="*{description}"></textarea>
-
+            <input type="hidden" th:value="${newGoal}"  name="newGoal" />
             <label><span> </span><input type="submit" value="Wyślij"/></label>
         </fieldset>
     </form>

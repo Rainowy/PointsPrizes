@@ -1,6 +1,8 @@
 package pl.coderslab.login.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -10,7 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 public class Goal {
 
     @Id
@@ -46,5 +50,15 @@ public class Goal {
     @PreUpdate
     public void preUpdate() {
         updated = LocalDateTime.now();
+    }
+
+    /**Synchro methods*/
+    public void addExercise(Exercise exercise){
+        exercises.add(exercise);
+        exercise.setGoal(this);
+    }
+    public void removeExercise(Exercise exercise){
+        exercises.remove(exercise);
+        exercise.setGoal(null);
     }
 }

@@ -69,7 +69,15 @@ public class ChildService {
         Child currentChild = getCurrentChild();
         currentChild.addGoal(goal);
         return childRepository.save(currentChild);
+    }
 
+    public Child saveChild(Exercise exercise){
+        Goal goal = exercise.getGoal();
+        Child currentChild = getCurrentChild();
+        goal.addExercise(exercise);
+        currentChild.addGoal(goal);
+        currentChild.addExercise(exercise);
+        return childRepository.save(currentChild);
     }
 
     public Child getCurrentChild() {
