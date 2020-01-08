@@ -21,10 +21,13 @@
             <input type="number" th:field="*{points}" placeholder="Ilość Punktów"/>
         </fieldset>
         <fieldset>
-            <legend><span class="number">2</span>Wybierz Cel do dodania punktów</legend>
+            <legend><span class="number">2</span>Wybierz Cel do     dodania punktów</legend>
 
-            <select th:field="*{goal}">
-                <option value="0">Wybierz Cel</option>
+            <label th:if="${#fields.hasErrors('goal')}" th:errors="*{goal}"
+                   class="validation-message"></label>
+
+            <select th:field="*{goal}" >
+                <option value="">Wybierz Cel</option>
                 <option th:each="goal : ${goals}" th:value="${goal.id}"
                         th:text="${goal.getName()}"></option>
             </select>

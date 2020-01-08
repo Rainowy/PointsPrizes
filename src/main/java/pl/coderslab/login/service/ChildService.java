@@ -72,11 +72,15 @@ public class ChildService {
     }
 
     public Child saveChild(Exercise exercise){
-        Goal goal = exercise.getGoal();
+//        Goal goal = exercise.getGoal();
+//        exercise.setChild(getCurrentChild());
+
         Child currentChild = getCurrentChild();
-        goal.addExercise(exercise);
-        currentChild.addGoal(goal);
+//        goal.addExercise(exercise);
         currentChild.addExercise(exercise);
+//        goal.removeExercise(exercise);
+//        currentChild.addGoal(goal);
+
         return childRepository.save(currentChild);
     }
 
@@ -123,5 +127,4 @@ public class ChildService {
             }
         }
     }
-
 }

@@ -11,6 +11,7 @@ import pl.coderslab.login.entity.Exercise;
 import pl.coderslab.login.entity.Goal;
 import pl.coderslab.login.entity.Parent;
 import pl.coderslab.login.service.ChildService;
+import pl.coderslab.login.service.GoalService;
 
 import javax.persistence.ManyToOne;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,9 @@ public class ChildController {
 
     @Autowired
     private ChildService childService;
+
+    @Autowired
+    private GoalService goalService;
 
     @GetMapping("/edit")
     public ModelAndView editChild() {
@@ -72,8 +76,8 @@ public class ChildController {
 //            modelAndView.addObject("newGoal", "true");
 //        }
 //        System.out.println("aaaaa" + newGoal); //jest pusty
-     //tu go ustawia
-        modelAndView.addObject("newGoal",newGoal);
+        //tu go ustawia
+        modelAndView.addObject("newGoal", newGoal);
         Goal goal = new Goal();
         modelAndView.addObject("goal", goal);
         modelAndView.setViewName("child/addGoal");
@@ -89,14 +93,16 @@ public class ChildController {
             modelAndView.setViewName("child/addGoal");
             return modelAndView;
         }
-        System.out.println("co tu wypisuje " + newGoal);
-//        if(!newGoal.isEmpty() && newGoal !=null){
-//        if (newGoal != null) { //nie jest null dziaka
-        //jeżeli dodajemy sam cel to tu newGoal jest empty
-        if(newGoal != null && !newGoal.isEmpty()){
-            System.out.println("NOWY GOL");
-            exercise.setGoal(goal);
-            childService.saveChild(exercise);
+
+
+//        if (goal == null && newGoal.isEmpty()) {
+//            result.rejectValue("goal", "error.user", "Wybierz cel lub dodaj nowy");
+//        }
+
+        if (newGoal != null && !newGoal.isEmpty()) {
+            this.exercise.setChild(childService.getCurrentChild());
+            goal.addExercise(exercise);
+            childService.saveChild(goal);
         } else {
             childService.saveChild(goal);
         }
@@ -120,12 +126,22 @@ public class ChildController {
                                     @RequestParam(required = false) String newGoal,
                                     RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
+        if (exercise.getGoal() == null && newGoal == null) {
+            result.rejectValue("goal", "messageCode", "Wybierz cel lub dodaj nowy");
+        }
         if (result.hasErrors()) {
             modelAndView.setViewName("child/addExercise");
             modelAndView.addObject("goals", childService.findGoalsByChildId(childService.getCurrentChild().getId()));
             return modelAndView;
         }
+        System.out.println("cel " + exercise.getGoal() );
+
         System.out.println("NEW GOAL " + newGoal);
+
+
+
+
+
         if (newGoal == null) {
             childService.saveChild(exercise);
         }
@@ -141,7 +157,8 @@ public class ChildController {
 
         System.out.println("EXERCISE " + exercise);
         System.out.println("NEW GOAL " + newGoal);
-        modelAndView.setViewName("child/addExercise");
+//        modelAndView.setViewName("child/addExercise");
+        modelAndView.setViewName("child/exercises");
         return modelAndView;
     }
 }

@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -33,6 +30,7 @@ public class Exercise {
     @Column(name = "exe_points")
     private int points;
 
+//    @NotNull(message = "Wybierz cel lub dodaj nowy")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "goal_id")
     private Goal goal;
