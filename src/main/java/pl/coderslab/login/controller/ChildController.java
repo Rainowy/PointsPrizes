@@ -16,10 +16,10 @@ import pl.coderslab.login.service.GoalService;
 import javax.persistence.ManyToOne;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/child")
-//@SessionAttributes("childParent")
 public class ChildController {
 
     private Exercise exercise;
@@ -36,6 +36,16 @@ public class ChildController {
         modelAndView.addObject("child", childService.getCurrentChild());
         modelAndView.setViewName("child/editProfile");
         return modelAndView;
+    }
+
+    @ModelAttribute("goals")
+    List<Goal> showGoals(){
+        return childService.findGoalsByChildId();
+    }
+
+    @ModelAttribute("exercises")
+    List<Exercise> showExercises(){
+        return childService.findExercisesByChildId();
     }
 
     @PostMapping("/edit")
@@ -56,7 +66,7 @@ public class ChildController {
     @GetMapping("/exercises")
     public ModelAndView exercises() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("exercises", childService.findExercisesByChildId(childService.getCurrentChild().getId()));
+        modelAndView.addObject("exercises",showExercises());
         modelAndView.setViewName("child/exercises");
         return modelAndView;
     }
@@ -64,7 +74,6 @@ public class ChildController {
     @GetMapping("/goals")
     public ModelAndView goals() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("goals", childService.findGoalsByChildId(childService.getCurrentChild().getId()));
         modelAndView.setViewName("child/goals");
         return modelAndView;
     }
@@ -89,13 +98,12 @@ public class ChildController {
             return modelAndView;
         }
         if (newGoal != null && !newGoal.isEmpty()) {
-            this.exercise.setChild(childService.getCurrentChild());
-            goal.addExercise(exercise);
-            //powinno być exercise.setGoal
-            childService.saveChild(goal);
+            exercise.setGoal(goal);
+            childService.saveChild(exercise);
         } else {
             childService.saveChild(goal);
         }
+        modelAndView.addObject("exercises",showExercises());
 //        modelAndView.addObject("successMessage", "Cel został dodany");
         modelAndView.setViewName("child/exercises");
         return modelAndView;
@@ -106,14 +114,14 @@ public class ChildController {
         ModelAndView modelAndView = new ModelAndView();
         Exercise exercise = new Exercise();
         modelAndView.addObject("exercise", exercise);
-        modelAndView.addObject("goals", childService.findGoalsByChildId(childService.getCurrentChild().getId()));
+        modelAndView.addObject("goals",showGoals());
         modelAndView.setViewName("child/addExercise");
         return modelAndView;
     }
 
     @PostMapping("/addExercise")
     public ModelAndView addExercise(@Valid Exercise exercise,
-                                    BindingResult result,@RequestParam(required = false) String newGoal, RedirectAttributes redirectAttributes) {
+                                    BindingResult result, @RequestParam(required = false) String newGoal, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
 
         if (exercise.getGoal() == null && newGoal == null) {
@@ -121,15 +129,13 @@ public class ChildController {
         }
         if (result.hasErrors()) {
             modelAndView.setViewName("child/addExercise");
-            modelAndView.addObject("goals", childService.findGoalsByChildId(childService.getCurrentChild().getId()));
+            modelAndView.addObject("goals",showGoals());
             return modelAndView;
         }
 
         if (newGoal == null) {
             childService.saveChild(exercise);
-        }
-
-        else {
+        } else {
             this.exercise = exercise;
             redirectAttributes.addFlashAttribute("newGoal", "true");
             modelAndView.setViewName("redirect:/child/addGoal");

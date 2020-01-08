@@ -76,41 +76,28 @@ public class ChildService {
     }
 
     public Child saveChild(Exercise exercise){
+
         Child currentChild = getCurrentChild();
         int childPoints = currentChild.getPoints();
         currentChild.setPoints(childPoints + exercise.getPoints());
 
-        Goal exerciseGoal = exercise.getGoal();
-        int exerciseGoalId = exerciseGoal.getId();
+        Goal goal = exercise.getGoal();
+        int goalId = goal.getId();
 
-        Optional<Integer> goalPoints = goalRepository.findPoint(exerciseGoalId);
+        Optional<Integer> goalPoints = goalRepository.goalPoints(goalId);
 
-//        Integer points =0;
       if(goalPoints.isPresent()){
           Integer points = goalPoints.get();
-          exerciseGoal.setPoints(points + exercise.getPoints());
+          goal.setPoints(points + exercise.getPoints());
       }
       else{
-          exerciseGoal.setPoints(exercise.getPoints());
+          goal.setPoints(exercise.getPoints());
       }
+        exercise.setChild(currentChild);
+        goal.addExercise(exercise);
+        currentChild.addGoal(goal);
+//        currentChild.addExercise(exercise);
 
-//      exerciseGoal.setPoints(points + exercise.getPoints());
-//
-//        if(goalRepository.findPoint(exerciseGoalId).isPresent()){
-//         exerciseGoal.setPoints(goalRepository.findPoint(exerciseGoalId));
-//        }
-
-
-//        System.out.println("PUNKTY TO " + pointsManagement(exercise));
-//        pointsManagement(exercise);
-
-
-
-
-
-
-//        Child currentChild = getCurrentChild();
-        currentChild.addExercise(exercise);
         return childRepository.save(currentChild);
     }
 
@@ -123,34 +110,13 @@ public class ChildService {
             return childRepository.findByEmail(credential);
         } else return childRepository.findByName(credential);
     }
-    public List<Exercise> findExercisesByChildId(int id){
-        return exerciseRepository.findAllByChildId(id);
+    public List<Exercise> findExercisesByChildId(){
+        return exerciseRepository.findAllByChildId(getCurrentChild().getId());
     }
 
-    public List<Goal> findGoalsByChildId(int id){
-        return goalRepository.findAllByChildId(id);
+    public List<Goal> findGoalsByChildId(){
+        return goalRepository.findAllByChildId(getCurrentChild().getId());
     }
-
-//    public void pointsManagement(int id){
-//        @Min(1) @Max(5) int pointsFromExercise = exercise.getPoints();
-//        Goal exerciseGoal = exercise.getGoal();
-//
-//        if(goalRepository.findPoint(id).isPresent()){
-//
-//        }
-//
-//
-//        int pointsFromGoal = goalRepository.findPoint(exerciseGoal.getId());
-//        int goalPointsToAdd = pointsFromExercise + pointsFromGoal;
-//
-//        System.out.println("do dodania" + goalPointsToAdd);
-//
-//        getCurrentChild().getExercises().stream()
-//                .forEach(exercise1 -> exercise1.getPoints())
-//
-//
-////        return goalPointsToAdd;
-//    }
 
 
 

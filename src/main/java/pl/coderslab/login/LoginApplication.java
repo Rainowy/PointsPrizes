@@ -12,4 +12,5 @@ public class LoginApplication {
 	}
 
 	//TODO kasowanie dziecka kasuje wpis w child_role
+	//TODO polskie znaki w bazie
 }

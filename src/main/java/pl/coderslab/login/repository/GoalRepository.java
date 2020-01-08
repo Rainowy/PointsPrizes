@@ -14,6 +14,6 @@ public interface GoalRepository extends JpaRepository<Goal, Integer> {
     List<Goal> findAllByChildId(int id);
 
     @Query("select g.points from Goal g where g.id =?1")
-    Optional<Integer> findPoint(int id);
+    Optional<Integer> goalPoints(int id);
 
 }
