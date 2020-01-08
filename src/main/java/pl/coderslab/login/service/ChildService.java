@@ -16,11 +16,15 @@ import pl.coderslab.login.repository.RoleRepository;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class ChildService {
@@ -72,15 +76,41 @@ public class ChildService {
     }
 
     public Child saveChild(Exercise exercise){
-//        Goal goal = exercise.getGoal();
-//        exercise.setChild(getCurrentChild());
-
         Child currentChild = getCurrentChild();
-//        goal.addExercise(exercise);
-        currentChild.addExercise(exercise);
-//        goal.removeExercise(exercise);
-//        currentChild.addGoal(goal);
+        int childPoints = currentChild.getPoints();
+        currentChild.setPoints(childPoints + exercise.getPoints());
 
+        Goal exerciseGoal = exercise.getGoal();
+        int exerciseGoalId = exerciseGoal.getId();
+
+        Optional<Integer> goalPoints = goalRepository.findPoint(exerciseGoalId);
+
+//        Integer points =0;
+      if(goalPoints.isPresent()){
+          Integer points = goalPoints.get();
+          exerciseGoal.setPoints(points + exercise.getPoints());
+      }
+      else{
+          exerciseGoal.setPoints(exercise.getPoints());
+      }
+
+//      exerciseGoal.setPoints(points + exercise.getPoints());
+//
+//        if(goalRepository.findPoint(exerciseGoalId).isPresent()){
+//         exerciseGoal.setPoints(goalRepository.findPoint(exerciseGoalId));
+//        }
+
+
+//        System.out.println("PUNKTY TO " + pointsManagement(exercise));
+//        pointsManagement(exercise);
+
+
+
+
+
+
+//        Child currentChild = getCurrentChild();
+        currentChild.addExercise(exercise);
         return childRepository.save(currentChild);
     }
 
@@ -100,6 +130,27 @@ public class ChildService {
     public List<Goal> findGoalsByChildId(int id){
         return goalRepository.findAllByChildId(id);
     }
+
+//    public void pointsManagement(int id){
+//        @Min(1) @Max(5) int pointsFromExercise = exercise.getPoints();
+//        Goal exerciseGoal = exercise.getGoal();
+//
+//        if(goalRepository.findPoint(id).isPresent()){
+//
+//        }
+//
+//
+//        int pointsFromGoal = goalRepository.findPoint(exerciseGoal.getId());
+//        int goalPointsToAdd = pointsFromExercise + pointsFromGoal;
+//
+//        System.out.println("do dodania" + goalPointsToAdd);
+//
+//        getCurrentChild().getExercises().stream()
+//                .forEach(exercise1 -> exercise1.getPoints())
+//
+//
+////        return goalPointsToAdd;
+//    }
 
 
 

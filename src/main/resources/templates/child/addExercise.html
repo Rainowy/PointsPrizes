@@ -21,12 +21,12 @@
             <input type="number" th:field="*{points}" placeholder="Ilość Punktów"/>
         </fieldset>
         <fieldset>
-            <legend><span class="number">2</span>Wybierz Cel do     dodania punktów</legend>
+            <legend><span class="number">2</span>Wybierz Cel do dodania punktów</legend>
 
             <label th:if="${#fields.hasErrors('goal')}" th:errors="*{goal}"
                    class="validation-message"></label>
 
-            <select th:field="*{goal}" >
+            <select th:field="*{goal}">
                 <option value="">Wybierz Cel</option>
                 <option th:each="goal : ${goals}" th:value="${goal.id}"
                         th:text="${goal.getName()}"></option>
@@ -45,53 +45,4 @@
         <input type="submit" value="Wyślij"/>
     </form>
 </div>
-
 </html>
-
-
-            <!--<input-->
-                    <!--type="checkbox"-->
-                    <!--name="myBooleanVariable"-->
-                    <!--th:checked="${myBooleanVariable}"/>-->
-
-
-            <!---->
-        <!--<input type="text" name="exeDesc" placeholder="Opis zadania *" required>-->
-        <!--<input type="number" name="exePoints" placeholder="Ilość punktów *" min="1" max="5" required>-->
-        <!--</fieldset>-->
-        <!--<fieldset>-->
-
-            <!--<legend><span class="number">2</span>Wybierz Cel do dodania punktów</legend>-->
-            <!--<select id="job" name="exeGoal">-->
-                <!--<optgroup label="Cele">-->
-                    <!--c:-->
-                    <!--<c:forEach var="goal" items="${sessionScope.allGoals}">-->
-                        <!--<option value=${goal.getId()}>${goal.getName()}</option>-->
-                    <!--</c:forEach>-->
-                <!--</optgroup>-->
-            <!--</select>-->
-
-        <!--</fieldset>-->
-        <!--<fieldset>-->
-            <!--<legend><span class="number">3</span>Zaznacz by dodać nowy cel</legend>-->
-            <!--<div class="container">-->
-                <!--<div class="round">-->
-                    <!--<input type="checkbox" id="checkbox" name="newGoal" value="true"/>-->
-                    <!--<label for="checkbox"></label>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</fieldset>-->
-
-        <!--<input type="submit" value="Wyślij"/>-->
-    <!--</form>-->
-<!--</div>-->
-
-<!--</html>-->
-
-
-<!--<div class="form-group blu-margin">-->
-    <!--<select class="form-control" th:field="${operator.opeId}" id="dropOperator">-->
-        <!--<option value="0">select operator</option>-->
-        <!--<option th:each="operator : ${operators}" th:value="${operator.id}" th:text="${operator.operatorName}"></option>-->
-    <!--</select>-->
-<!--</div>-->
