@@ -19,6 +19,7 @@ import pl.coderslab.login.service.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -71,6 +72,9 @@ public class LoginController {
     @GetMapping("/parent/panel")
     public ModelAndView parent() {
         ModelAndView modelAndView = new ModelAndView();
+        List<Integer> special = new ArrayList<>();
+        modelAndView.addObject("special",special);
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Parent parent = parentService.findParentByEmail(auth.getName());
         List<Child> allChildrenByParent = parentService.findAllChildrenByParent(parent.getId());
@@ -83,6 +87,8 @@ public class LoginController {
         modelAndView.setViewName("parent/parent-panel");
         return modelAndView;
     }
+
+
 
     @GetMapping("/child/panel")
     public ModelAndView child(@AuthenticationPrincipal Principal child) {

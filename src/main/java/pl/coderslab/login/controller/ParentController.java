@@ -5,14 +5,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.coderslab.login.Wrapper.SpecialExercise;
 import pl.coderslab.login.entity.Child;
+import pl.coderslab.login.entity.Exercise;
 import pl.coderslab.login.entity.Parent;
 import pl.coderslab.login.service.ChildService;
 import pl.coderslab.login.service.ParentService;
 
 import javax.print.DocFlavor;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/parent")
@@ -67,4 +72,43 @@ public class ParentController {
         modelAndView.setViewName("/parent/parent-panel");
         return modelAndView;
     }
+
+    @GetMapping ("/special")
+//    @ResponseBody
+    public ModelAndView special(@RequestParam  int childId[]) {
+        Exercise exercise = new Exercise();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("exercise",exercise);
+
+        List<Child> children = new ArrayList<>();
+
+        IntStream stream = Arrays.stream(childId);
+
+        stream.forEach(id -> children.add(childService.findById(id)));
+
+        modelAndView.addObject("children",children);
+
+
+
+
+//        dzieci.stream()
+//                .forEach(System.out::println);
+//
+//
+//
+//
+//
+//        for (int l = 0; l <childId.length ; l++) {
+//            System.out.println(childId[l])
+        modelAndView.setViewName("parent/specialExercise");
+        return modelAndView;
+    }
+
+    @PostMapping("/special")
+    public ModelAndView special(@Valid Exercise exercise, BindingResult result){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("parent/parent-panel");
+return modelAndView;
+    }
 }
+

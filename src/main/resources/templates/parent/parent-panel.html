@@ -19,27 +19,67 @@
         </button>
     </form>
     <h2>Twoje dzieci</h2>
-    <table>
+    <!--<table>-->
+        <!--<thead>-->
+        <!--<tr>-->
+            <!--<th> Imię </th>-->
+            <!--<th> Wiek </th>-->
+            <!--<th>Akcje</th>-->
+            <!--<th>Zadanie Specjalne</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr th:if="${children.empty}">-->
+            <!--<td colspan="2"> Brak zarejestrowanych dzieci </td>-->
+        <!--</tr>-->
+        <!--<tr th:each="child : ${children}">-->
+            <!--<td><span th:text="${child.getName()}"> Imię </span></td>-->
+            <!--<td><span th:text="${child.getAge()}"> Wiek </span></td>-->
+            <!--<td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>-->
+            <!--<a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>-->
+
+        <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
+
+    <form th:action="@{/parent/special}" method="get">
+    <table class="table">
         <thead>
         <tr>
-            <th> Imię </th>
-            <th> Wiek </th>
-            <th>Akcje</th>
+            <th scope="col">#</th>
+            <th scope="col">Imię</th>
+            <th scope="col">Wiek</th>
+            <th scope="col">Akcje</th>
+            <th scope="col">Zadanie specjalne</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${children.empty}">
-            <td colspan="2"> Brak zarejestrowanych dzieci </td>
-        </tr>
         <tr th:each="child : ${children}">
-            <td><span th:text="${child.getName()}"> Imię </span></td>
-            <td><span th:text="${child.getAge()}"> Wiek </span></td>
+            <th scope="row" th:text="${childStat.index} + 1"></th>
+            <td th:text="${child.getName()}"></td>
+            <td th:text="${child.getAge()}"></td>
             <td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>
-            <a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>
+                <a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>
+            <td><input type="checkbox"  th:value="${child.getId()}" name="childId" /></td>
         </tr>
+
+        <tr>
+            <!--<th scope="row">2</th>-->
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="submit" value="Dodaj zadanie"/></td>
+        </tr>
+        <!--<tr>-->
+            <!--<th scope="row">3</th>-->
+            <!--<td>Larry</td>-->
+            <!--<td>the Bird</td>-->
+            <!--<td>@twitter</td>-->
+        <!--</tr>-->
         </tbody>
     </table>
-
+    </form>
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
