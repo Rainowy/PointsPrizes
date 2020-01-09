@@ -28,7 +28,7 @@ import java.util.stream.IntStream;
 @RequestMapping("/parent")
 public class ParentController {
 
-    private List<Child> children = new ArrayList<>();
+    private List<Child> childrens = new ArrayList<>();
 
 
     private ParentService parentService;
@@ -88,72 +88,32 @@ public class ParentController {
     }
 
     @GetMapping("/special")
-//    @ResponseBody
     public ModelAndView special(@RequestParam int childId[]) {
         Exercise exercise = new Exercise();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("exercise", exercise);
 
         List<Child> children = new ArrayList<>();
-
         IntStream stream = Arrays.stream(childId);
-
-        stream.forEach(id -> this.children.add(childService.findById(id)));
+        stream.forEach(id -> children.add(childService.findById(id)));
 
         modelAndView.addObject("children", children);
+        this.childrens = children;
 
-
-//        dzieci.stream()
-//                .forEach(System.out::println);
-//
-//
-//
-//
-//
-//        for (int l = 0; l <childId.length ; l++) {
-//            System.out.println(childId[l])
         modelAndView.setViewName("parent/specialExercise");
         return modelAndView;
     }
 
     @PostMapping("/special")
-    public ModelAndView special(@RequestParam String godzina, @Valid Exercise exercise, BindingResult result) {
+    public ModelAndView special(@RequestParam String time, @Valid Exercise exercise, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
-
-        System.out.println(godzina);
 
         if (result.hasErrors()) {
             modelAndView.setViewName("parent/specialExercise");
             return modelAndView;
         }
-
-        String str = (LocalDate.now().toString() + " " + godzina);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
-        exercise.setDeadLine(dateTime);
-
-        for (int i = 0; i <children.size() ; i++) {
-            exercise.setChild(children.get(i));
-            exerciseService.saveSpecialExercise(exercise);
-            exercise.setId(0);
-        }
-
-
-//        children.stream()
-//
-//   .forEach(child -> exerciseService.saveSpecialExercise(exercise.setChild(child)))
-//                .map(child -> exercise.setChild(child))
-//        .forEach(child -> exercise.setChild(child)
-//        .forEach(child -> exercise.setChild(child)
-
-
-
-
-
-
-//        exerciseService.saveSpecialExercise(exercise);
-//        System.out.println(exercise.getDeadLine());
+        exerciseService.saveSpecialExercise(exercise, this.childrens, time);
+        childrens.clear();
         modelAndView.setViewName("parent/parent-panel");
         return modelAndView;
     }
