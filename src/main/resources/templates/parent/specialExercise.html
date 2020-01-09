@@ -23,10 +23,13 @@
             <input type="number" th:field="*{points}" placeholder="Ilość Punktów"/>
         </fieldset>
         <fieldset>
-            <legend><span class="number">1</span>Wybierz czas wykonania</legend>
-            <input type="time" id="appt" name="appt"
+            <legend><span class="number">2</span>Wybierz czas wykonania</legend>
+            <input type="time" name="godzina" id="appt"
                    min="09:00" max="18:00" required>
         </fieldset>
+
+        <!--th:field="*{deadLine}"-->
+
         <!--<fieldset>-->
         <!--<legend><span class="number">2</span>Wybierz Cel do dodania punktów</legend>-->
 

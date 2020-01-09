@@ -39,6 +39,10 @@ public class Exercise {
     @JoinColumn(name = "child_id")
     private Child child;
 
+    private int special;
+
+    private LocalDateTime deadLine;
+
     @PrePersist
     public void prePersist() {
         created = LocalDateTime.now();

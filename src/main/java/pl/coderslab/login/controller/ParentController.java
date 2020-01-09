@@ -10,10 +10,15 @@ import pl.coderslab.login.entity.Child;
 import pl.coderslab.login.entity.Exercise;
 import pl.coderslab.login.entity.Parent;
 import pl.coderslab.login.service.ChildService;
+import pl.coderslab.login.service.ExerciseService;
 import pl.coderslab.login.service.ParentService;
 
 import javax.print.DocFlavor;
 import javax.validation.Valid;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,11 +28,20 @@ import java.util.stream.IntStream;
 @RequestMapping("/parent")
 public class ParentController {
 
-    @Autowired
+    private List<Child> children = new ArrayList<>();
+
+
     private ParentService parentService;
 
-    @Autowired
     private ChildService childService;
+
+    private ExerciseService exerciseService;
+
+    public ParentController(ParentService parentService, ChildService childService, ExerciseService exerciseService) {
+        this.parentService = parentService;
+        this.childService = childService;
+        this.exerciseService = exerciseService;
+    }
 
     @GetMapping("/addChild")
     public ModelAndView addChild() {
@@ -73,22 +87,20 @@ public class ParentController {
         return modelAndView;
     }
 
-    @GetMapping ("/special")
+    @GetMapping("/special")
 //    @ResponseBody
-    public ModelAndView special(@RequestParam  int childId[]) {
+    public ModelAndView special(@RequestParam int childId[]) {
         Exercise exercise = new Exercise();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("exercise",exercise);
+        modelAndView.addObject("exercise", exercise);
 
         List<Child> children = new ArrayList<>();
 
         IntStream stream = Arrays.stream(childId);
 
-        stream.forEach(id -> children.add(childService.findById(id)));
+        stream.forEach(id -> this.children.add(childService.findById(id)));
 
-        modelAndView.addObject("children",children);
-
-
+        modelAndView.addObject("children", children);
 
 
 //        dzieci.stream()
@@ -105,10 +117,45 @@ public class ParentController {
     }
 
     @PostMapping("/special")
-    public ModelAndView special(@Valid Exercise exercise, BindingResult result){
+    public ModelAndView special(@RequestParam String godzina, @Valid Exercise exercise, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
+
+        System.out.println(godzina);
+
+        if (result.hasErrors()) {
+            modelAndView.setViewName("parent/specialExercise");
+            return modelAndView;
+        }
+
+        String str = (LocalDate.now().toString() + " " + godzina);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+        exercise.setDeadLine(dateTime);
+
+        for (int i = 0; i <children.size() ; i++) {
+            exercise.setChild(children.get(i));
+            exerciseService.saveSpecialExercise(exercise);
+            exercise.setId(0);
+        }
+
+
+//        children.stream()
+//
+//   .forEach(child -> exerciseService.saveSpecialExercise(exercise.setChild(child)))
+//                .map(child -> exercise.setChild(child))
+//        .forEach(child -> exercise.setChild(child)
+//        .forEach(child -> exercise.setChild(child)
+
+
+
+
+
+
+//        exerciseService.saveSpecialExercise(exercise);
+//        System.out.println(exercise.getDeadLine());
         modelAndView.setViewName("parent/parent-panel");
-return modelAndView;
+        return modelAndView;
     }
 }
 
