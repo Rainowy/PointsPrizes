@@ -39,12 +39,12 @@ public class ChildController {
     }
 
     @ModelAttribute("goals")
-    List<Goal> showGoals(){
+    List<Goal> showGoals() {
         return childService.findGoalsByChildId();
     }
 
     @ModelAttribute("exercises")
-    List<Exercise> showExercises(){
+    List<Exercise> showExercises() {
         return childService.findExercisesByChildId();
     }
 
@@ -66,7 +66,7 @@ public class ChildController {
     @GetMapping("/exercises")
     public ModelAndView exercises() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("exercises",showExercises());
+        modelAndView.addObject("exercises", showExercises());
         modelAndView.setViewName("child/exercises");
         return modelAndView;
     }
@@ -103,7 +103,7 @@ public class ChildController {
         } else {
             childService.saveChild(goal);
         }
-        modelAndView.addObject("exercises",showExercises());
+        modelAndView.addObject("exercises", showExercises());
 //        modelAndView.addObject("successMessage", "Cel został dodany");
         modelAndView.setViewName("child/exercises");
         return modelAndView;
@@ -114,7 +114,7 @@ public class ChildController {
         ModelAndView modelAndView = new ModelAndView();
         Exercise exercise = new Exercise();
         modelAndView.addObject("exercise", exercise);
-        modelAndView.addObject("goals",showGoals());
+        modelAndView.addObject("goals", showGoals());
         modelAndView.setViewName("child/addExercise");
         return modelAndView;
     }
@@ -129,7 +129,7 @@ public class ChildController {
         }
         if (result.hasErrors()) {
             modelAndView.setViewName("child/addExercise");
-            modelAndView.addObject("goals",showGoals());
+            modelAndView.addObject("goals", showGoals());
             return modelAndView;
         }
 
@@ -142,6 +142,17 @@ public class ChildController {
             return modelAndView;
         }
         modelAndView.setViewName("redirect:/child/exercises");
+        return modelAndView;
+    }
+
+    @PostMapping("/addSpecial")
+    public ModelAndView addSpecialExercise(@RequestParam int exeId,
+                                           @RequestParam int exeGoal) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        childService.saveSpecialExercise(exeId,exeGoal);
+
+        modelAndView.setViewName("redirect:/child/panel");
         return modelAndView;
     }
 }

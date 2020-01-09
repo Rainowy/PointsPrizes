@@ -45,6 +45,6 @@ public class ExerciseService {
     }
 
     public List<Exercise> getSpecialExercises(){
-        return exerciseRepository.findSpecialExercise(childService.getCurrentChild().getId());
+        return exerciseRepository.findSpecialExercises(childService.getCurrentChild().getId());
     }
 }

@@ -13,8 +13,8 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
     List<Exercise> findAllByChildId(int id);
 
     @Query("SELECT e from Exercise e where e.deadLine > current_timestamp and e.child.id=?1 and e.special=1 ")
-    List<Exercise> findSpecialExercise(int id);
+    List<Exercise> findSpecialExercises(int id);
 
+    Exercise findById(int id);
 
-//    select * from exercise where dead_line > NOW() AND child_id=4 AND special=1;
 }

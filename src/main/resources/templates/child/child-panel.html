@@ -20,35 +20,39 @@
     </form>
     <h2>zadanie specjalne</h2>
 
-    <tr th:if="${special.empty}">
-        <td colspan="2"> Brak zadań specjalnych</td>
-    </tr>
+    <!--<tr th:if="${special.empty}">-->
+    <!--<td colspan="2"> Brak zadań specjalnych</td>-->
+    <!--</tr>-->
 
-    <tr th:each="exercise : ${special}">
-        <!--<th scope="row" th:text="${childStat.index} + 1"></th>-->
-        <td th:text="${exercise.getDescription()}"></td>
-        <td th:text="${exercise.getCreated()}"></td>
-        <td th:text="${exercise.getDeadLine()}"></td>
-        <!--<td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>-->
-        <!--<a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>-->
-        <!--<td><input type="checkbox"  th:value="${child.getId()}" name="childId" /></td>-->
-    </tr>
+    <!--<tr th:each="exercise : ${special}">-->
+    <!--&lt;!&ndash;<th scope="row" th:text="${childStat.index} + 1"></th>&ndash;&gt;-->
+    <!--<td th:text="${exercise.getDescription()}"></td>-->
+    <!--<td th:text="${exercise.getCreated()}"></td>-->
+    <!--<td th:text="${exercise.getDeadLine()}"></td>-->
+    <!--&lt;!&ndash;<td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>&ndash;&gt;-->
+    <!--&lt;!&ndash;<a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td><input type="checkbox"  th:value="${child.getId()}" name="childId" /></td>&ndash;&gt;-->
+    <!--</tr>-->
 
     <div th:switch="${special.isEmpty()}">
-        <p th:case="true">Brak zadań specjalnych</p>
-        <p th:case="false">
-        <form action="#" th:action="@{/child/addExercise}" method="get">
-            <tr th:each="exercise : ${special}">
-                <td th:text="${exercise.getDescription()}"></td>
-                <td th:text="${exercise.getCreated()}"></td>
-                <td th:text="${exercise.getDeadLine()}"></td>
+        <tr th:case="true">Brak zadań specjalnych</tr>
+        <tr th:case="false">
+            <form action="#" th:action="@{/child/addSpecial}" method="post">
+        <tr th:each="exercise : ${special}">
+            <td th:text="${exercise.getDescription()}"></td>
+            <td th:text="${exercise.getPoints()}"></td>
+            <td th:text="${exercise.getCreated()}"></td>
+            <td th:text="${exercise.getDeadLine()}"></td>
+            <td><select name="exeGoal" th:required="true">>
+                <option value="">Wybierz Cel</option>
+                <option th:each="goal : ${goals}" th:value="${goal.id}"
+                        th:text="${goal.getName()}"></option>
+            </select></td>
+            <input type="hidden" th:value="${exercise.id}" name="exeId"/>
 
-                <input type="submit" value="Wyślij"/>
-        </form>
+            <input type="submit" value="Wykonane"/>
+            </form>
         </tr>
-        </p>
-
-
     </div>
 
 
@@ -101,7 +105,5 @@
     </div>
 
 </div>
-
-
 </body>
 </html>

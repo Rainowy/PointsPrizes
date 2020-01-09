@@ -30,7 +30,6 @@ public class ParentController {
 
     private List<Child> childrens = new ArrayList<>();
 
-
     private ParentService parentService;
 
     private ChildService childService;

@@ -13,10 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.coderslab.login.entity.Child;
 import pl.coderslab.login.entity.Parent;
 import pl.coderslab.login.entity.User;
-import pl.coderslab.login.service.ChildService;
-import pl.coderslab.login.service.ExerciseService;
-import pl.coderslab.login.service.ParentService;
-import pl.coderslab.login.service.UserService;
+import pl.coderslab.login.service.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -31,9 +28,12 @@ public class LoginController {
 
     private ExerciseService exerciseService;
 
-    public LoginController(ParentService parentService, ExerciseService exerciseService) {
+    private ChildService childService;
+
+    public LoginController(ParentService parentService, ExerciseService exerciseService, ChildService childService) {
         this.parentService = parentService;
         this.exerciseService = exerciseService;
+        this.childService = childService;
     }
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
@@ -105,6 +105,7 @@ public class LoginController {
 //        + " " +get + " (" + parent.getEmail() + ")");
 
         modelAndView.addObject("special",exerciseService.getSpecialExercises());
+        modelAndView.addObject("goals",childService.findGoalsByChildId());
 
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("child/child-panel");

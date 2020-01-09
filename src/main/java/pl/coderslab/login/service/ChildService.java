@@ -101,6 +101,14 @@ public class ChildService {
         return childRepository.save(currentChild);
     }
 
+    public void saveSpecialExercise(int exerciseId, int goalId){
+        Exercise exercise = exerciseRepository.findById(exerciseId);
+        Goal goal = goalRepository.findById(goalId);
+        exercise.setSpecial(0);
+        exercise.setGoal(goal);
+        saveChild(exercise);
+    }
+
     public Child getCurrentChild() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String credential = auth.getName();
