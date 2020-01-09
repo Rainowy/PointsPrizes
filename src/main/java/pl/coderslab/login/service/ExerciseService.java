@@ -15,8 +15,11 @@ public class ExerciseService {
 
     ExerciseRepository exerciseRepository;
 
-    public ExerciseService(ExerciseRepository exerciseRepository) {
+    ChildService childService;
+
+    public ExerciseService(ExerciseRepository exerciseRepository, ChildService childService) {
         this.exerciseRepository = exerciseRepository;
+        this.childService = childService;
     }
 
     public void saveSpecialExercise(Exercise exercise, List<Child> children, String time) {
@@ -39,5 +42,9 @@ public class ExerciseService {
         String str = (LocalDate.now().toString() + " " + time);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return LocalDateTime.parse(str, formatter);
+    }
+
+    public List<Exercise> getSpecialExercises(){
+        return exerciseRepository.findSpecialExercise(childService.getCurrentChild().getId());
     }
 }

@@ -14,6 +14,7 @@ import pl.coderslab.login.entity.Child;
 import pl.coderslab.login.entity.Parent;
 import pl.coderslab.login.entity.User;
 import pl.coderslab.login.service.ChildService;
+import pl.coderslab.login.service.ExerciseService;
 import pl.coderslab.login.service.ParentService;
 import pl.coderslab.login.service.UserService;
 
@@ -25,8 +26,15 @@ import java.util.List;
 @Controller
 public class LoginController {
 
-    @Autowired
+
     private ParentService parentService;
+
+    private ExerciseService exerciseService;
+
+    public LoginController(ParentService parentService, ExerciseService exerciseService) {
+        this.parentService = parentService;
+        this.exerciseService = exerciseService;
+    }
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login() {
@@ -95,6 +103,8 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userName", "Welcome " + child.getName());
 //        + " " +get + " (" + parent.getEmail() + ")");
+
+        modelAndView.addObject("special",exerciseService.getSpecialExercises());
 
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("child/child-panel");

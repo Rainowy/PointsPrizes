@@ -18,6 +18,40 @@
                 type="Submit">Logout
         </button>
     </form>
+    <h2>zadanie specjalne</h2>
+
+    <tr th:if="${special.empty}">
+        <td colspan="2"> Brak zadań specjalnych</td>
+    </tr>
+
+    <tr th:each="exercise : ${special}">
+        <!--<th scope="row" th:text="${childStat.index} + 1"></th>-->
+        <td th:text="${exercise.getDescription()}"></td>
+        <td th:text="${exercise.getCreated()}"></td>
+        <td th:text="${exercise.getDeadLine()}"></td>
+        <!--<td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>-->
+        <!--<a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>-->
+        <!--<td><input type="checkbox"  th:value="${child.getId()}" name="childId" /></td>-->
+    </tr>
+
+    <div th:switch="${special.isEmpty()}">
+        <p th:case="true">Brak zadań specjalnych</p>
+        <p th:case="false">
+        <form action="#" th:action="@{/child/addExercise}" method="get">
+            <tr th:each="exercise : ${special}">
+                <td th:text="${exercise.getDescription()}"></td>
+                <td th:text="${exercise.getCreated()}"></td>
+                <td th:text="${exercise.getDeadLine()}"></td>
+
+                <input type="submit" value="Wyślij"/>
+        </form>
+        </tr>
+        </p>
+
+
+    </div>
+
+
     <h2>Edytuj swoje dane</h2>
     <form th:action="@{/child/edit}" method="get">
         <button class="btn btn-md btn-warning btn-block" name="edit"
@@ -33,24 +67,24 @@
 
 
     <!--<table>-->
-        <!--<thead>-->
-        <!--<tr>-->
-            <!--<th> Imię </th>-->
-            <!--<th> Wiek </th>-->
-            <!--<th>Akcje</th>-->
-        <!--</tr>-->
-        <!--</thead>-->
-        <!--<tbody>-->
-        <!--<tr th:if="${children.empty}">-->
-            <!--<td colspan="2"> Brak zarejestrowanych dzieci </td>-->
-        <!--</tr>-->
-        <!--<tr th:each="child : ${children}">-->
-            <!--<td><span th:text="${child.getName()}"> Imię </span></td>-->
-            <!--<td><span th:text="${child.getAge()}"> Wiek </span></td>-->
-            <!--<td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>-->
-                <!--<a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th> Imię </th>-->
+    <!--<th> Wiek </th>-->
+    <!--<th>Akcje</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--<tr th:if="${children.empty}">-->
+    <!--<td colspan="2"> Brak zarejestrowanych dzieci </td>-->
+    <!--</tr>-->
+    <!--<tr th:each="child : ${children}">-->
+    <!--<td><span th:text="${child.getName()}"> Imię </span></td>-->
+    <!--<td><span th:text="${child.getAge()}"> Wiek </span></td>-->
+    <!--<td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>-->
+    <!--<a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
     <!--</table>-->
 
     <div class="panel-group" style="margin-top:40px">
