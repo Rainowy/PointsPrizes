@@ -68,6 +68,7 @@ public class ParentService {
         child.setActive(1);
         Role userRole = roleRepository.findByRole("CHILD");
         child.setRoles(new HashSet<>(Arrays.asList(userRole)));
+        child.setExercises(c);
         Parent parent = getCurrentParent();
         parent.addChild(child);
         child.setParent(parent);

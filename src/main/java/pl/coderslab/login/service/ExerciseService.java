@@ -17,9 +17,12 @@ public class ExerciseService {
 
     ChildService childService;
 
-    public ExerciseService(ExerciseRepository exerciseRepository, ChildService childService) {
+    EmailService emailService;
+
+    public ExerciseService(ExerciseRepository exerciseRepository, ChildService childService, EmailService emailService) {
         this.exerciseRepository = exerciseRepository;
         this.childService = childService;
+        this.emailService = emailService;
     }
 
     public void saveSpecialExercise(Exercise exercise, List<Child> children, String time) {
@@ -35,6 +38,8 @@ public class ExerciseService {
             exerciseToSave.setChild(children.get(i));
             exerciseRepository.save(exerciseToSave);
         }
+        emailService.sendSimpleMessage("tomasz.czarny.czarnecki@gmail.com","Email test","Dostępne nowe zadanie specjalne");
+
     }
 
     private LocalDateTime getLocalDateTimeFromString(String time) {
