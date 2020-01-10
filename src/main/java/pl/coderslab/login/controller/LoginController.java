@@ -81,7 +81,7 @@ public class LoginController {
     public ModelAndView parent() {
         ModelAndView modelAndView = new ModelAndView();
         List<Integer> special = new ArrayList<>();
-        modelAndView.addObject("special",special);
+        modelAndView.addObject("special", special);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Parent parent = parentService.findParentByEmail(auth.getName());
@@ -91,23 +91,20 @@ public class LoginController {
 //        modelAndView.addObject("userName", "Welcome " + parent.getName());
 //        + " " + parent.getName() + " (" + parent.getEmail() + ")");
 //        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.addObject("userName", "Welcome " + parent.getName() + " " + parent.getLastName() + " (" + parent.getEmail() + ")");
+        modelAndView.addObject("userName", "Witaj " + parent.getName() + " " + parent.getLastName() + " (" + parent.getEmail() + ")");
         modelAndView.setViewName("parent/parent-panel");
         return modelAndView;
     }
 
-
-
     @GetMapping("/child/panel")
     public ModelAndView child(@AuthenticationPrincipal Principal child) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("userName", "Welcome " + child.getName());
-//        + " " +get + " (" + parent.getEmail() + ")");
+        modelAndView.addObject("userName", "Witaj " + child.getName());
+        modelAndView.addObject("userPoints", "Twoja aktualna liczba punktów: " + childService.getCurrentChild().getPoints());
+        modelAndView.addObject("special", exerciseService.getSpecialExercises());
+        modelAndView.addObject("goals", childService.findGoalsByChildId());
 
-        modelAndView.addObject("special",exerciseService.getSpecialExercises());
-        modelAndView.addObject("goals",childService.findGoalsByChildId());
-
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
+        modelAndView.addObject("adminMessage", "Panel Dzieci");
         modelAndView.setViewName("child/child-panel");
         return modelAndView;
     }

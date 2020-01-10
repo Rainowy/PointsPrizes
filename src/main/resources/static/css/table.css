@@ -90,7 +90,7 @@ body {
     color: #466966;
     background: #f2f2f2;
     /*background-image: url("/views/images/sw2.jpg");*/
-    /*background-image: url("/static/images/Border3.jpg");*/
+    background-image: url("/images/yellowHouses.jpg");
 
     background-size:cover
 }

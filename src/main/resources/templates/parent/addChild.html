@@ -9,11 +9,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<form th:action="@{/login}" method="get">
-    <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
-</form>
+
 
 <div class="container">
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Wyloguj
+        </button>
+    </form>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <form autocomplete="off" action="#" th:action="@{/parent/addChild}"
@@ -67,16 +70,13 @@
                         <button type="submit" class="btn btn-primary btn-block">Zarejestruj Użytkownika</button>
                     </div>
                 </div>
-
                 <span th:utext="${successMessage}"></span>
-
             </form>
         </div>
     </div>
+    <form th:action="@{/parent/panel}" method="get">
+        <button class="btn btn-md btn-warning btn-block" type="Submit">Powrót do panelu</button>
+    </form>
 </div>
-<form th:action="@{/}" method="get">
-    <button class="btn btn-md btn-warning btn-block" type="Submit">Powrót do strony głównej</button>
-</form>
-
 </body>
 </html>

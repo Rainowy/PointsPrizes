@@ -45,33 +45,18 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
     }
 
     protected String determineTargetUrl(Authentication authentication) {
-        boolean isParent = false;
-        boolean isChild = false;
-        boolean isAdmin = false;
         Collection<? extends GrantedAuthority> authorities
                 = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
             if (grantedAuthority.getAuthority().equals("PARENT")) {
-                isParent = true;
-                break;
+                return "parent/panel";
             } else if (grantedAuthority.getAuthority().equals("CHILD")) {
-                isChild = true;
-                break;
+                return "child/panel";
             } else if (grantedAuthority.getAuthority().equals("ADMIN")) {
-                isAdmin = true;
-                break;
+                return "admin/panel";
             }
         }
-
-        if (isParent) {
-            return "parent/panel";
-        } else if (isChild) {
-            return "child/panel";
-        } else if (isAdmin) {
-            return "admin/panel";
-        } else {
-            throw new IllegalStateException();
-        }
+        throw new IllegalStateException();
     }
 
     protected void clearAuthenticationAttributes(HttpServletRequest request) {

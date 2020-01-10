@@ -7,9 +7,24 @@
     <title>Exercise</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/table.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/buttons.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font.css}"/>
 </head>
 <body>
 </body>
+<span class="letter" data-letter="T">T</span>
+<span class="letter" data-letter="W">W</span>
+<span class="letter" data-letter="O">O</span>
+<span class="letter" data-letter="J">J</span>
+<span class="letter" data-letter="E">E</span>
+<span class="letter" data-letter=" "> </span>
+<span class="letter" data-letter="Z">Z</span>
+<span class="letter" data-letter="A">A</span>
+<span class="letter" data-letter="D">D</span>
+<span class="letter" data-letter="A">A</span>
+<span class="letter" data-letter="N">N</span>
+<span class="letter" data-letter="I">I</span>
+<span class="letter" data-letter="A">A</span>
+
 <table class="responstable">
 
     <thead>
@@ -43,6 +58,9 @@
 </a>
 <a th:href="@{'/child/goals/'}">
     <button>Moje cele</button>
+</a>
+<a th:href="@{'/child/panel/'}">
+    <button>Powrót</button>
 </a>
 <form th:action="@{/logout}" method="get">
     <button type="submit" name="your_name" value="your_value" class="btn-link">Wyloguj</button>
