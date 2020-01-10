@@ -5,6 +5,7 @@ import pl.coderslab.login.entity.Child;
 import pl.coderslab.login.entity.Exercise;
 import pl.coderslab.login.repository.ExerciseRepository;
 
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,16 +31,24 @@ public class ExerciseService {
         LocalDateTime dateTime = getLocalDateTimeFromString(time);
 
         for (int i = 0; i < children.size(); i++) {
+            Child child = children.get(i);
             Exercise exerciseToSave = new Exercise();
             exerciseToSave.setDescription(exercise.getDescription());
             exerciseToSave.setSpecial(1);
             exerciseToSave.setPoints(exercise.getPoints());
             exerciseToSave.setDeadLine(dateTime);
-            exerciseToSave.setChild(children.get(i));
+            exerciseToSave.setChild(child);
             exerciseRepository.save(exerciseToSave);
+            mailCheckIfValidAndSend(child);
         }
-        emailService.sendSimpleMessage("tomasz.czarny.czarnecki@gmail.com","Email test","Dostępne nowe zadanie specjalne");
+//        emailService.sendSimpleMessage("tasz.czarny.czarnecki@gmail.com","Email test","Dostępne nowe zadanie specjalne");
+    }
 
+    public void mailCheckIfValidAndSend(Child child) {
+        String email = child.getEmail();
+        if (childService.validateMail(email)) {
+            emailService.sendSimpleMessage(email, "Email test", "Dostępne nowe zadanie specjalne");
+        }
     }
 
     private LocalDateTime getLocalDateTimeFromString(String time) {
@@ -49,7 +58,11 @@ public class ExerciseService {
         return LocalDateTime.parse(str, formatter);
     }
 
-    public List<Exercise> getSpecialExercises(){
+    public List<Exercise> getSpecialExercises() {
         return exerciseRepository.findSpecialExercises(childService.getCurrentChild().getId());
+    }
+
+    public List<Exercise> findAllByChildId(int id) {
+        return exerciseRepository.findAllByChildId(id);
     }
 }

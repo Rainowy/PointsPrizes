@@ -7,9 +7,7 @@ import org.mockito.Mockito;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.coderslab.login.entity.Child;
 import pl.coderslab.login.entity.Parent;
-import pl.coderslab.login.repository.ChildRepository;
-import pl.coderslab.login.repository.ParentRepository;
-import pl.coderslab.login.repository.RoleRepository;
+import pl.coderslab.login.repository.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +27,10 @@ public class ParentServiceTest {
     @Mock
     private RoleRepository mockRoleRepository;
     @Mock
+    private ExerciseRepository mockExerciseRepository;
+    @Mock
+    private GoalRepository mockGoalRepository;
+    @Mock
     private BCryptPasswordEncoder mockBCryptPasswordEncoder;
 
     private ParentService parentServiceUnderTest;
@@ -38,7 +40,7 @@ public class ParentServiceTest {
     @Before
     public void setUp() {
         initMocks(this);
-        parentServiceUnderTest = new ParentService(mockChildRepository, mockParentRepository, mockRoleRepository, mockBCryptPasswordEncoder);
+        parentServiceUnderTest = new ParentService(mockChildRepository, mockParentRepository, mockRoleRepository, mockExerciseRepository,mockGoalRepository, mockBCryptPasswordEncoder);
 
         //wprowadzamy obiekt z formularza
         parent = Parent.builder()

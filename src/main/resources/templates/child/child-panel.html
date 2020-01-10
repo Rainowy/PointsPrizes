@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <title>User Page</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
@@ -18,7 +17,7 @@
                 type="Submit">Logout
         </button>
     </form>
-    <h2>zadanie specjalne</h2>
+    <h2>Zadanie specjalne</h2>
 
     <!--<tr th:if="${special.empty}">-->
     <!--<td colspan="2"> Brak zadań specjalnych</td>-->
@@ -34,25 +33,63 @@
     <!--&lt;!&ndash;<td><input type="checkbox"  th:value="${child.getId()}" name="childId" /></td>&ndash;&gt;-->
     <!--</tr>-->
 
+    <!--<div th:switch="${special.isEmpty()}">-->
+    <!--<tr th:case="true">Brak zadań specjalnych</tr>-->
+    <!--<tr th:case="false">-->
+    <!--<form action="#" th:action="@{/child/addSpecial}" method="post">-->
+
+    <!--<tr th:each="exercise : ${special}">-->
+    <!--<td th:text="${exercise.getDescription()}"></td>-->
+    <!--<td th:text="${exercise.getPoints()}"></td>-->
+    <!--<td th:text="${exercise.getCreated()}"></td>-->
+    <!--<td th:text="${exercise.getDeadLine()}"></td>-->
+    <!--<td><select name="exeGoal" th:required="true">>-->
+    <!--<option value="">Wybierz Cel</option>-->
+    <!--<option th:each="goal : ${goals}" th:value="${goal.id}"-->
+    <!--th:text="${goal.getName()}"></option>-->
+    <!--</select></td>-->
+    <!--<input type="hidden" th:value="${exercise.id}" name="exeId"/>-->
+
+    <!--<input type="submit" value="Wykonane"/>-->
+    <!--</form>-->
+    <!--</tr>-->
+    <!--</div>-->
+
+
     <div th:switch="${special.isEmpty()}">
         <tr th:case="true">Brak zadań specjalnych</tr>
         <tr th:case="false">
             <form action="#" th:action="@{/child/addSpecial}" method="post">
-        <tr th:each="exercise : ${special}">
-            <td th:text="${exercise.getDescription()}"></td>
-            <td th:text="${exercise.getPoints()}"></td>
-            <td th:text="${exercise.getCreated()}"></td>
-            <td th:text="${exercise.getDeadLine()}"></td>
-            <td><select name="exeGoal" th:required="true">>
-                <option value="">Wybierz Cel</option>
-                <option th:each="goal : ${goals}" th:value="${goal.id}"
-                        th:text="${goal.getName()}"></option>
-            </select></td>
-            <input type="hidden" th:value="${exercise.id}" name="exeId"/>
+                <table class="table">
+                    <thead>
+                    <!--<tr>-->
+                    <tr bgcolor="#07D79F">
+                        <th scope="col">#</th>
+                        <th scope="col">Opis</th>
+                        <th scope="col">Punkty</th>
+                        <th scope="col">Utworzono</th>
+                        <th scope="col">Aktywne do</th>
 
-            <input type="submit" value="Wykonane"/>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="exercise : ${special}">
+                        <th scope="row" th:text="${exerciseStat.index} + 1"></th>
+                        <td th:text="${exercise.getDescription()}"></td>
+                        <td th:text="${exercise.getPoints()}"></td>
+                        <td th:text="${exercise.getCreated()}"></td>
+                        <td th:text="${exercise.getDeadLine()}"></td>
+                        <td><select name="exeGoal" th:required="true">>
+                            <option value="">Wybierz Cel</option>
+                            <option th:each="goal : ${goals}" th:value="${goal.id}"
+                                    th:text="${goal.getName()}"></option>
+                        </select></td>
+                        <input type="hidden" th:value="${exercise.id}" name="exeId"/>
+                        <td><input type="submit" value="Wykonane"/>
+                    </tr>
+                    </tbody>
+                </table>
             </form>
-        </tr>
     </div>
 
 

@@ -70,13 +70,13 @@ public class ChildService {
         return childRepository.save(child);
     }
 
-    public Child saveChild(Goal goal){
+    public Child saveChild(Goal goal) {
         Child currentChild = getCurrentChild();
         currentChild.addGoal(goal);
         return childRepository.save(currentChild);
     }
 
-    public Child saveChild(Exercise exercise){
+    public Child saveChild(Exercise exercise) {
 
         Child currentChild = getCurrentChild();
         int childPoints = currentChild.getPoints();
@@ -87,13 +87,12 @@ public class ChildService {
 
         Optional<Integer> goalPoints = goalRepository.goalPoints(goalId);
 
-      if(goalPoints.isPresent()){
-          Integer points = goalPoints.get();
-          goal.setPoints(points + exercise.getPoints());
-      }
-      else{
-          goal.setPoints(exercise.getPoints());
-      }
+        if (goalPoints.isPresent()) {
+            Integer points = goalPoints.get();
+            goal.setPoints(points + exercise.getPoints());
+        } else {
+            goal.setPoints(exercise.getPoints());
+        }
         exercise.setChild(currentChild);
         goal.addExercise(exercise);
         currentChild.addGoal(goal);
@@ -102,7 +101,7 @@ public class ChildService {
         return childRepository.save(currentChild);
     }
 
-    public void saveSpecialExercise(int exerciseId, int goalId){
+    public void saveSpecialExercise(int exerciseId, int goalId) {
         Exercise exercise = exerciseRepository.findById(exerciseId);
         Goal goal = goalRepository.findById(goalId);
         exercise.setSpecial(0);
@@ -112,21 +111,25 @@ public class ChildService {
 
     public Child getCurrentChild() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String credential = auth.getName();
-        Pattern pattern = Pattern.compile("^(.+)@(.+)$");
-        Matcher mat = pattern.matcher(credential);
-        if (mat.matches()) {
-            return childRepository.findByEmail(credential);
-        } else return childRepository.findByName(credential);
+        String credentials = auth.getName();
+        if (validateMail(credentials)) {
+            return childRepository.findByEmail(credentials);
+        } else return childRepository.findByName(credentials);
     }
-    public List<Exercise> findExercisesByChildId(){
+    public boolean validateMail(String mail) {
+        Pattern pattern = Pattern.compile("^(.+)@(.+)$");
+        return pattern.matcher(mail).matches();
+    }
+
+    public List<Exercise> findExercisesByChildId() {
         return exerciseRepository.findAllByChildId(getCurrentChild().getId());
     }
 
-    public List<Goal> findGoalsByChildId(){
+
+
+    public List<Goal> findGoalsByChildId() {
         return goalRepository.findAllByChildId(getCurrentChild().getId());
     }
-
 
 
     //TODO change this into smth. nicer

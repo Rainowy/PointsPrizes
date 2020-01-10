@@ -16,5 +16,4 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
     List<Exercise> findSpecialExercises(int id);
 
     Exercise findById(int id);
-
 }
