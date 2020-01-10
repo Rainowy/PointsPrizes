@@ -66,6 +66,7 @@ public class ChildService {
         child.setRoles(new HashSet<>(Arrays.asList(userRole)));
         child.setParent(getCurrentChild().getParent());
         child.setGoals(getCurrentChild().getGoals());
+        child.setExercises(getCurrentChild().getExercises());
         return childRepository.save(child);
     }
 

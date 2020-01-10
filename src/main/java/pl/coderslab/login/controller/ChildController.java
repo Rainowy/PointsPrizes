@@ -11,6 +11,7 @@ import pl.coderslab.login.entity.Exercise;
 import pl.coderslab.login.entity.Goal;
 import pl.coderslab.login.entity.Parent;
 import pl.coderslab.login.service.ChildService;
+import pl.coderslab.login.service.ExerciseService;
 import pl.coderslab.login.service.GoalService;
 
 import javax.persistence.ManyToOne;
@@ -24,11 +25,18 @@ public class ChildController {
 
     private Exercise exercise;
 
-    @Autowired
+
     private ChildService childService;
 
-    @Autowired
-    private GoalService goalService;
+//    @Autowired
+//    private GoalService goalService;
+
+    private ExerciseService exerciseService;
+
+    public ChildController(ChildService childService, ExerciseService exerciseService) {
+        this.childService = childService;
+        this.exerciseService = exerciseService;
+    }
 
     @GetMapping("/edit")
     public ModelAndView editChild() {
@@ -58,8 +66,10 @@ public class ChildController {
             modelAndView.setViewName("child/editProfile");
             return modelAndView;
         }
+        //TODO write edit changes to session and update changes on logout instead of immediate update.
         childService.saveChild(child);
-        modelAndView.setViewName("child/child-panel");
+        modelAndView.setViewName("redirect:/logout");
+//        modelAndView.setViewName("redirect:/child/panel");
         return modelAndView;
     }
 
