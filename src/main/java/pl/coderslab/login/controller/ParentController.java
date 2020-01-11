@@ -102,18 +102,19 @@ public class ParentController {
         modelAndView.setViewName("parent/specialExercise");
         return modelAndView;
     }
-
+//(required = false)
     @PostMapping("/special")
     public ModelAndView special(@RequestParam String time, @Valid Exercise exercise, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
-
+//        time ="15:30";
         if (result.hasErrors()) {
             modelAndView.setViewName("parent/specialExercise");
             return modelAndView;
         }
         exerciseService.saveSpecialExercise(exercise, this.childrens, time);
         childrens.clear();
-        modelAndView.setViewName("parent/parent-panel");
+//        modelAndView.setViewName("parent/parent-panel");
+        modelAndView.setViewName("redirect:/parent/panel");
         return modelAndView;
     }
 }

@@ -28,6 +28,8 @@ public class ExerciseService {
 
     public void saveSpecialExercise(Exercise exercise, List<Child> children, String time) {
 
+//        time = "15:30";
+
         LocalDateTime dateTime = getLocalDateTimeFromString(time);
 
         for (int i = 0; i < children.size(); i++) {

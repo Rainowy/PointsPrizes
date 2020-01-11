@@ -20,36 +20,42 @@
     </form>
     <h2>Twoje dzieci</h2>
 
-    <form th:action="@{/parent/special}" method="get">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Imię</th>
-            <th scope="col">Wiek</th>
-            <th scope="col">Akcje</th>
-            <th scope="col">Zadanie specjalne</th>
+    <div th:switch="${children.isEmpty()}">
+        <tr th:case="true">Brak dodaych dzieci</tr>
+        <tr th:case="false">
+
+            <form th:action="@{/parent/special}" method="get">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Imię</th>
+                        <th scope="col">Wiek</th>
+                        <th scope="col">Akcje</th>
+                        <th scope="col">Zadanie specjalne</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="child : ${children}">
+                        <th scope="row" th:text="${childStat.index} + 1"></th>
+                        <td th:text="${child.getName()}"></td>
+                        <td th:text="${child.getAge()}"></td>
+                        <td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>
+                            <a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>
+                        <td><input type="checkbox" th:value="${child.getId()}" name="childId"/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><input type="submit" value="Dodaj zadanie"/></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
         </tr>
-        </thead>
-        <tbody>
-        <tr th:each="child : ${children}">
-            <th scope="row" th:text="${childStat.index} + 1"></th>
-            <td th:text="${child.getName()}"></td>
-            <td th:text="${child.getAge()}"></td>
-            <td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>
-                <a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>
-            <td><input type="checkbox"  th:value="${child.getId()}" name="childId" /></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><input type="submit" value="Dodaj zadanie"/></td>
-        </tr>
-        </tbody>
-    </table>
-    </form>
+    </div>
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -65,6 +71,7 @@
     <form th:action="@{/parent/addChild}" method="get">
         <button class="btn btn-md btn-warning btn-block" type="Submit">Dodaj swoje dzieci</button>
     </form>
+
 </div>
 </body>
 </html>
