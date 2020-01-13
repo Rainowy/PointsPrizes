@@ -26,18 +26,18 @@ public class Parent {
     @Column(name = "parent_id")
     private int id;
     @Column(name = "email")
-    @Email(message = "*Wpisz prawidłowy email")
-    @NotEmpty(message = "*Wpisz email")
+    @Email(message = "{email.regular}")
+    @NotEmpty(message = "{email.notemptyParent}")
     private String email;
     @Column(name = "password")
-//    @Length(min = 5, message = "*Twoje hasło musi zawierać przynajmniej 5 znaków")
-//    @NotEmpty(message = "*Wpisz hasło")
+    @Length(min = 5, message = "{password.length}")
+    @NotEmpty(message = "{password.notempty}")
     private String password;
     @Column(name = "username")
-    @NotEmpty(message = "*Wpisz imię")
+    @NotEmpty(message = "{username.notempty}")
     private String name;
     @Column(name = "last_name")
-    @NotEmpty(message = "*Wpisz nazwisko")
+    @NotEmpty(message = "{lastname.notempty}")
     private String lastName;
     @Column(name = "active")
     private int active;

@@ -29,6 +29,7 @@ public class Child {
     private int id;
     @Column(name = "email")
     @Email(message = "*Jeżeli posiadasz, wpisz email")
+//    @Email(message = "{email.notempty}")
 //    @NotEmpty(message = "*Wpisz email")
 //    @EmailExistsConstraint
     private String email;

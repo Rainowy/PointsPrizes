@@ -28,7 +28,6 @@ public class ExerciseService {
 
     public void saveSpecialExercise(Exercise exercise, List<Child> children, String time) {
 
-//        time = "15:30";
 
         LocalDateTime dateTime = getLocalDateTimeFromString(time);
 
@@ -43,7 +42,7 @@ public class ExerciseService {
             exerciseRepository.save(exerciseToSave);
             mailCheckIfValidAndSend(child);
         }
-//        emailService.sendSimpleMessage("tasz.czarny.czarnecki@gmail.com","Email test","Dostępne nowe zadanie specjalne");
+
     }
 
     public void mailCheckIfValidAndSend(Child child) {
