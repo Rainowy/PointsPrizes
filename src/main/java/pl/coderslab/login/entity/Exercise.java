@@ -18,10 +18,8 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exe_id")
     private int id;
-    @NotEmpty
-    @Size(min=10)
-    @NotEmpty(message = "To pole nie może być puste")
-    @Size(min = 10, message = "To pole musi zawierać przynajmniej 10 znaków")
+    @NotEmpty(message = "{field.notempty}")
+    @Size(min = 10, message = "{field.size}")
     private String description;
     private LocalDateTime created;
     private LocalDateTime updated;

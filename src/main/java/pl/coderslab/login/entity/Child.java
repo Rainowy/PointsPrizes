@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -28,22 +29,19 @@ public class Child {
     @Column(name = "child_id")
     private int id;
     @Column(name = "email")
-    @Email(message = "*Jeżeli posiadasz, wpisz email")
-//    @Email(message = "{email.notempty}")
-//    @NotEmpty(message = "*Wpisz email")
-//    @EmailExistsConstraint
+    @Email(message = "{email.regularChild}")
     private String email;
     @Column(name = "password")
-    @Length(min = 5, message = "*Twoje hasło musi zawierać przynajmniej 5 znaków")
-    @NotEmpty(message = "*Wpisz hasło")
+    @Length(min = 5, message = "{password.length}")
+    @NotEmpty(message = "{password.notempty}")
     private String password;
     @Column(name = "username")
-    @NotEmpty(message = "*Wpisz imię")
+    @NotEmpty(message = "{username.notempty}")
     private String name;
     @Column(name = "last_name")
-    @NotEmpty(message = "*Wpisz nazwisko")
+    @NotEmpty(message = "{lastname.notempty}")
     private String lastName;
-    @NotNull(message = "*Wpisz wiek")
+    @NotNull(message = "{age.notnull}")
     @Column(name = "age")
     private int age;
     @Column(name = "active")

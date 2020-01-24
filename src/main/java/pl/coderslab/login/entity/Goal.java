@@ -21,10 +21,10 @@ public class Goal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "goal_id")
     private int id;
-    @NotEmpty(message = "To pole nie może być puste")
+    @NotEmpty(message = "{field.notempty}")
     private String name;
-    @NotEmpty(message = "To pole nie może być puste")
-    @Size(message = "Pole musi zawierać min. 10 znaków" ,min=10)
+    @NotEmpty(message ="{field.notempty}")
+    @Size(message = "{field.size}" ,min=10)
     private String description;
 
     private LocalDateTime created;

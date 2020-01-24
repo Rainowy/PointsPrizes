@@ -125,13 +125,14 @@ public class ChildService {
         return exerciseRepository.findAllByChildId(getCurrentChild().getId());
     }
 
-
+    public List<Exercise> findAllNotSpecialExercisesByChildId(){
+        return exerciseRepository.findAllNotSpecialExercisesByChildId(getCurrentChild().getId());
+    }
 
     public List<Goal> findGoalsByChildId() {
         return goalRepository.findAllByChildId(getCurrentChild().getId());
     }
-
-
+    
     //TODO change this into smth. nicer
     public void existenceValidator(@Valid Child child, BindingResult result) {
         if (child.getId() == 0) {

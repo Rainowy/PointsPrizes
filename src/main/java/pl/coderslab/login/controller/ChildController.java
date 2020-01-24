@@ -25,7 +25,6 @@ public class ChildController {
 
     private Exercise exercise;
 
-
     private ChildService childService;
 
 //    @Autowired
@@ -53,7 +52,8 @@ public class ChildController {
 
     @ModelAttribute("exercises")
     List<Exercise> showExercises() {
-        return childService.findExercisesByChildId();
+//        return childService.findExercisesByChildId();
+        return  childService.findAllNotSpecialExercisesByChildId();
     }
 
     @PostMapping("/edit")
@@ -76,6 +76,7 @@ public class ChildController {
     @GetMapping("/exercises")
     public ModelAndView exercises() {
         ModelAndView modelAndView = new ModelAndView();
+        //TODO tu też exercises wstawić
         modelAndView.addObject("exercises", showExercises());
         modelAndView.setViewName("child/exercises");
         return modelAndView;
@@ -113,6 +114,7 @@ public class ChildController {
         } else {
             childService.saveChild(goal);
         }
+        //TODO tutaj wstawić not special exercises
         modelAndView.addObject("exercises", showExercises());
 //        modelAndView.addObject("successMessage", "Cel został dodany");
         modelAndView.setViewName("child/exercises");

@@ -27,7 +27,7 @@ public class Parent {
     private int id;
     @Column(name = "email")
     @Email(message = "{email.regular}")
-    @NotEmpty(message = "{email.notemptyParent}")
+    @NotEmpty(message = "{email.notempty}")
     private String email;
     @Column(name = "password")
     @Length(min = 5, message = "{password.length}")

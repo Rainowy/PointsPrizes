@@ -42,16 +42,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private String rolesByEmailChild;
 
     @Value("${spring.queries.parent-username}")
-    String parentByName;
+    private String parentByName;
 
     @Value("${spring.queries.parent-email}")
-    String parentByEmail;
+    private String parentByEmail;
 
     @Value("${spring.queries.child-username}")
-    String childByName;
+    private String childByName;
 
     @Value("${spring.queries.child-email}")
-    String childByEmail;
+    private String childByEmail;
 
 
     @Override

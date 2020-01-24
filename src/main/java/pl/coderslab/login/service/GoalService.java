@@ -9,11 +9,14 @@ import pl.coderslab.login.repository.GoalRepository;
 @Service
 public class GoalService {
 
-    @Autowired
-    GoalRepository goalRepository;
+    private GoalRepository goalRepository;
 
-    @Autowired
-    ChildService childService;
+    private ChildService childService;
+
+    public GoalService(GoalRepository goalRepository, ChildService childService) {
+        this.goalRepository = goalRepository;
+        this.childService = childService;
+    }
 
     public Goal saveGoal(Goal goal, Exercise exercise) {
         goal.setChild(childService.getCurrentChild());

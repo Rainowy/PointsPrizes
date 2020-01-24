@@ -12,6 +12,9 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
 
     List<Exercise> findAllByChildId(int id);
 
+    @Query("SELECT e from Exercise e where e.child.id=?1 and e.special=0")
+    List<Exercise> findAllNotSpecialExercisesByChildId(int id);
+
     @Query("SELECT e from Exercise e where e.deadLine > current_timestamp and e.child.id=?1 and e.special=1 ")
     List<Exercise> findSpecialExercises(int id);
 
