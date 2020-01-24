@@ -67,6 +67,7 @@ public class ChildService {
         child.setParent(getCurrentChild().getParent());
         child.setGoals(getCurrentChild().getGoals());
         child.setExercises(getCurrentChild().getExercises());
+        child.setPoints(getCurrentChild().getPoints());
         return childRepository.save(child);
     }
 
@@ -96,7 +97,6 @@ public class ChildService {
         exercise.setChild(currentChild);
         goal.addExercise(exercise);
         currentChild.addGoal(goal);
-//        currentChild.addExercise(exercise);
 
         return childRepository.save(currentChild);
     }
@@ -132,7 +132,7 @@ public class ChildService {
     public List<Goal> findGoalsByChildId() {
         return goalRepository.findAllByChildId(getCurrentChild().getId());
     }
-    
+
     //TODO change this into smth. nicer
     public void existenceValidator(@Valid Child child, BindingResult result) {
         if (child.getId() == 0) {
