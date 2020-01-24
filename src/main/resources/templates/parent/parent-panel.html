@@ -21,7 +21,7 @@
     <h2>Twoje dzieci</h2>
 
     <div th:switch="${children.isEmpty()}">
-        <tr th:case="true">Brak dodaych dzieci</tr>
+        <tr th:case="true">Brak dodanych dzieci</tr>
         <tr th:case="false">
 
             <form th:action="@{/parent/special}" method="get">
@@ -49,7 +49,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><input type="submit" value="Dodaj zadanie"/></td>
+                        <td th:if="${!children.isEmpty()}"><input type="submit" value="Dodaj zadanie"/></td>
                     </tr>
                     </tbody>
                 </table>

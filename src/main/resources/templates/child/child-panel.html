@@ -22,26 +22,27 @@
     <div th:switch="${special.isEmpty()}">
         <tr th:case="true">Brak zadań specjalnych</tr>
         <tr th:case="false">
-            <form action="#" th:action="@{/child/addSpecial}" method="post">
-                <table class="table">
-                    <thead>
+            <!--            <form action="#" th:action="@{/child/addSpecial}" method="post">-->
+            <table class="table">
+                <thead>
 
-                    <tr bgcolor="#07D79F">
-                        <th scope="col">#</th>
-                        <th scope="col">Opis</th>
-                        <th scope="col">Punkty</th>
-                        <th scope="col">Utworzono</th>
-                        <th scope="col">Aktywne do</th>
+                <tr bgcolor="#07D79F">
+                    <th scope="col">#</th>
+                    <th scope="col">Opis</th>
+                    <th scope="col">Punkty</th>
+                    <th scope="col">Utworzono</th>
+                    <th scope="col">Aktywne do</th>
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="exercise : ${special}">
-                        <th scope="row" th:text="${exerciseStat.index} + 1"></th>
-                        <td th:text="${exercise.getDescription()}"></td>
-                        <td th:text="${exercise.getPoints()}"></td>
-                        <td th:text="${exercise.getCreated()}"></td>
-                        <td th:text="${exercise.getDeadLine()}"></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="exercise : ${special}">
+                    <th scope="row" th:text="${exerciseStat.index} + 1"></th>
+                    <td th:text="${exercise.getDescription()}"></td>
+                    <td th:text="${exercise.getPoints()}"></td>
+                    <td th:text="${exercise.getCreated()}"></td>
+                    <td th:text="${exercise.getDeadLine()}"></td>
+                    <form action="#" th:action="@{/child/addSpecial}" method="post">
                         <td><select name="exeGoal" th:required="true">>
                             <option value="">Wybierz Cel</option>
                             <option th:each="goal : ${goals}" th:value="${goal.id}"
@@ -49,9 +50,10 @@
                         </select></td>
                         <input type="hidden" th:value="${exercise.id}" name="exeId"/>
                         <td><input type="submit" value="Wykonane"/>
-                    </tbody>
-                </table>
-            </form>
+                    </form>
+                </tbody>
+            </table>
+            <!--            </form>-->
         </tr>
     </div>
 
