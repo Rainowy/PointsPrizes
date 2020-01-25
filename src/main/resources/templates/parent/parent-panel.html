@@ -42,14 +42,23 @@
                         <td th:text="${child.getAge()}"></td>
                         <td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>
                             <a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>
-                        <td><input type="checkbox" th:value="${child.getId()}" name="childId"/></td>
+                        <!--                        <td><input type="checkbox" th:value="${child.getId()}" name="childId"/></td>-->
+                        <!--                        <td th:if="${childStat.size == 1}"><input type="checkbox" required="true" th:value="${child.getId()}" th:checked="${child.getId()}" name="childId"/></td>-->
+                        <td th:switch="${childStat.size == 1}">
+                            <p th:case="true"><input type="checkbox" required="true" th:value="${child.getId()}"
+                                                     th:checked="${child.getId()}" name="childId"></p>
+                            <p th:case="false"><input type="checkbox" th:value="${child.getId()}"
+                                                      name="childId">
+                            </p>
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td th:if="${!children.isEmpty()}"><input type="submit" value="Dodaj zadanie"/></td>
+                        <td th:if="${!children.isEmpty()}"><input type="submit" value="Dodaj zadanie" id="checkBtn"/>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -72,6 +81,17 @@
         <button class="btn btn-md btn-warning btn-block" type="Submit">Dodaj swoje dzieci</button>
     </form>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#checkBtn').click(function () {
+                checked = $("input[type=checkbox]:checked").length;
+                if (!checked) {
+                    alert("Musisz kogoś zaznaczyć");
+                    return false;
+                }
+            });
+        });
+    </script>
 </div>
 </body>
 </html>
