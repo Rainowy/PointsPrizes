@@ -1,7 +1,9 @@
 package pl.coderslab.login.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -10,7 +12,9 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Data
-//@Builder
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "user")
 public class User {
@@ -28,7 +32,7 @@ public class User {
     @NotEmpty(message = "*Please provide your password")
     private String password;
     @Column(name = "name")
-    @NotEmpty(message = "*Please provide your name")
+//    @NotEmpty(message = "*Please provide your dupa")
     private String name;
     @Column(name = "last_name")
     @NotEmpty(message = "*Please provide your last name")

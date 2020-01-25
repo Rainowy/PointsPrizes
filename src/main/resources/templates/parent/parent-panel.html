@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>User Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Wyloguj
+        </button>
+    </form>
+    <h2>Twoje dzieci</h2>
+
+    <div th:switch="${children.isEmpty()}">
+        <tr th:case="true">Brak dodanych dzieci</tr>
+        <tr th:case="false">
+
+            <form th:action="@{/parent/special}" method="get">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Imię</th>
+                        <th scope="col">Wiek</th>
+                        <th scope="col">Akcje</th>
+                        <th scope="col">Zadanie specjalne</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="child : ${children}">
+                        <th scope="row" th:text="${childStat.index} + 1"></th>
+                        <td th:text="${child.getName()}"></td>
+                        <td th:text="${child.getAge()}"></td>
+                        <td><a th:href="@{'/parent/edit/' + ${child.getId()}}">Edytuj</a>
+                            <a th:href="@{'/parent/delete/' + ${child.getId()}}">Kasuj</a></td>
+                        <!--                        <td><input type="checkbox" th:value="${child.getId()}" name="childId"/></td>-->
+                        <!--                        <td th:if="${childStat.size == 1}"><input type="checkbox" required="true" th:value="${child.getId()}" th:checked="${child.getId()}" name="childId"/></td>-->
+                        <td th:switch="${childStat.size == 1}">
+                            <p th:case="true"><input type="checkbox" required="true" th:value="${child.getId()}"
+                                                     th:checked="${child.getId()}" name="childId"></p>
+                            <p th:case="false"><input type="checkbox" th:value="${child.getId()}"
+                                                      name="childId">
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td th:if="${!children.isEmpty()}"><input type="submit" value="Dodaj zadanie" id="checkBtn"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </tr>
+    </div>
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${userName}"></span>
+            </div>
+            <div class="panel-body">
+                <img th:src="@{/images/beer.jpg}" class="img-responsive center-block" width="400" height="400"
+                     alt="Beer"/>
+            </div>
+            <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+        </div>
+    </div>
+    <form th:action="@{/parent/addChild}" method="get">
+        <button class="btn btn-md btn-warning btn-block" type="Submit">Dodaj swoje dzieci</button>
+    </form>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#checkBtn').click(function () {
+                checked = $("input[type=checkbox]:checked").length;
+                if (!checked) {
+                    alert("Musisz kogoś zaznaczyć");
+                    return false;
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

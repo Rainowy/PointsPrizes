@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Exercis</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/addExercise.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/roundCheckbox.css}"/>
+</head>
+<body>
+</body>
+<!--<h2>Zadanie będzie dostępne dla </h2>-->
+<!--<span th:each="child : ${children}" th:text="${child.getName()}"></span>-->
+<div class="form-style-5">
+    <h3>Zadanie będzie dostępne dla </h3>
+    <span th:each="child : ${children}" th:text="${child.getName()}"></span>
+    <form action="#" th:action="@{/parent/special}" th:object="${exercise}" method="post">
+        <fieldset>
+            <legend><span class="number">1</span>Dodaj Zadanie</legend>
+            <label th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                   class="validation-message"></label>
+            <input type="text" th:field="*{description}" placeholder="Opis Zadania"/>
+            <label th:if="${#fields.hasErrors('points')}" th:errors="*{points}"
+                   class="validation-message"></label>
+            <input type="number" th:field="*{points}" placeholder="Ilość Punktów"/>
+        </fieldset>
+        <fieldset>
+            <legend><span class="number">2</span>Wybierz czas wykonania</legend>
+            <input type="time" name="time" id="appt"
+                   min="09:00" max="24:00" required>
+        </fieldset>
+        <input type="submit" value="Wyślij"/>
+    </form>
+</div>
+</html>

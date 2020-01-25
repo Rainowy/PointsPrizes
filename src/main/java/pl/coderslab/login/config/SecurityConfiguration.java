@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -25,25 +26,66 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    @Value("${spring.queries.users-query}")
-    private String usersQuery;
+    @Value("${spring.queries.parents-query}")
+    private String parentsQuery;
 
-    @Value("${spring.queries.roles-query}")
-    private String rolesQuery;
+    @Value("${spring.queries.roles-email-parent}")
+    private String rolesByEmailParent;
+
+    @Value("${spring.queries.roles-username-parent}")
+    private String rolesByUserNameParent;
+
+    @Value("${spring.queries.roles-username-child}")
+    private String rolesByUserNameChild;
+
+    @Value("${spring.queries.roles-email-child}")
+    private String rolesByEmailChild;
+
+    @Value("${spring.queries.parent-username}")
+    private String parentByName;
+
+    @Value("${spring.queries.parent-email}")
+    private String parentByEmail;
+
+    @Value("${spring.queries.child-username}")
+    private String childByName;
+
+    @Value("${spring.queries.child-email}")
+    private String childByEmail;
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
+
         auth.
                 jdbcAuthentication()
-                .usersByUsernameQuery(usersQuery)
-                .authoritiesByUsernameQuery(rolesQuery)
+                .usersByUsernameQuery(parentByEmail)
+                .authoritiesByUsernameQuery(rolesByEmailParent)
+                .dataSource(dataSource)
+                .passwordEncoder(bCryptPasswordEncoder);
+//        auth.
+//                jdbcAuthentication()
+//                .usersByUsernameQuery(parentByName)
+//                .authoritiesByUsernameQuery(rolesByUserNameParent)
+//                .dataSource(dataSource)
+//                .passwordEncoder(bCryptPasswordEncoder);
+        auth.
+                jdbcAuthentication()
+                .usersByUsernameQuery(childByEmail)
+                .authoritiesByUsernameQuery(rolesByEmailChild)
+                .dataSource(dataSource)
+                .passwordEncoder(bCryptPasswordEncoder);
+        auth.
+                jdbcAuthentication()
+                .usersByUsernameQuery(childByName)
+                .authoritiesByUsernameQuery(rolesByUserNameChild)
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
         return new MySimpleUrlAuthenticationSuccessHandler();
     }
 
@@ -55,7 +97,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/user/**").hasAuthority("USER")
+                .antMatchers("/parent/**").hasAuthority("PARENT")
+                .antMatchers("/child/**").hasAuthority("CHILD")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
 
                 .anyRequest()
@@ -65,7 +108,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login").failureUrl("/login?error=true")
 //                .defaultSuccessUrl("/admin/home")
                 .successHandler(myAuthenticationSuccessHandler())
-                .usernameParameter("email")
+//                .usernameParameter("email")
+                .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

@@ -45,27 +45,18 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
     }
 
     protected String determineTargetUrl(Authentication authentication) {
-        boolean isUser = false;
-        boolean isAdmin = false;
         Collection<? extends GrantedAuthority> authorities
                 = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
-            if (grantedAuthority.getAuthority().equals("USER")) {
-                isUser = true;
-                break;
+            if (grantedAuthority.getAuthority().equals("PARENT")) {
+                return "parent/panel";
+            } else if (grantedAuthority.getAuthority().equals("CHILD")) {
+                return "child/panel";
             } else if (grantedAuthority.getAuthority().equals("ADMIN")) {
-                isAdmin = true;
-                break;
+                return "admin/panel";
             }
         }
-
-        if (isUser) {
-            return "user/home";
-        } else if (isAdmin) {
-            return "admin/home";
-        } else {
-            throw new IllegalStateException();
-        }
+        throw new IllegalStateException();
     }
 
     protected void clearAuthenticationAttributes(HttpServletRequest request) {
@@ -79,6 +70,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
     public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
         this.redirectStrategy = redirectStrategy;
     }
+
     protected RedirectStrategy getRedirectStrategy() {
         return redirectStrategy;
     }

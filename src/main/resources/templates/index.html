@@ -1,0 +1,100 @@
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html>&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;<meta charset="UTF-8">&ndash;&gt;-->
+<!--&lt;!&ndash;<title>CanvasJS Chart in Spring MVC - Thymeleaf</title>&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+<!--&lt;!&ndash;<div id="chartContainer" style="width:100%; height: 400px"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;<script th:inline="javascript">&ndash;&gt;-->
+<!--&lt;!&ndash;var chart = new CanvasJS.Chart("chartContainer", {&ndash;&gt;-->
+	<!--&lt;!&ndash;theme: "light2",&ndash;&gt;-->
+	<!--&lt;!&ndash;title: {&ndash;&gt;-->
+		<!--&lt;!&ndash;text: "CanvasJS Charts in Thymeleaf"&ndash;&gt;-->
+	<!--&lt;!&ndash;},&ndash;&gt;-->
+	<!--&lt;!&ndash;data:[{&ndash;&gt;-->
+		<!--&lt;!&ndash;dataPoints: [&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 10, y: 71 },&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 20, y: 55 },&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 30, y: 50 },&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 40, y: 65 },&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 50, y: 71 },&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 60, y: 68 },&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 70, y: 38 },&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 80, y: 92, indexLabel: "Highest" },&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 90, y: 54 },&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 100, y: 60 },&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 110, y: 21 },&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 120, y: 49 },&ndash;&gt;-->
+			<!--&lt;!&ndash;{ x: 130, y: 36 }&ndash;&gt;-->
+		<!--&lt;!&ndash;]&ndash;&gt;-->
+	<!--&lt;!&ndash;}]&ndash;&gt;-->
+<!--&lt;!&ndash;});&ndash;&gt;-->
+<!--&lt;!&ndash;chart.render();&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;/*&ndash;&gt;-->
+ <!--&lt;!&ndash;To get data from Service and to update chart, perform a AJAX request to get data, update the chart with received data and re-render the chart&ndash;&gt;-->
+ <!--&lt;!&ndash;Please refer the following links for more info on accessing data / rest-service&ndash;&gt;-->
+ <!--&lt;!&ndash;https://www.thymeleaf.org/doc/articles/springmvcaccessdata.html&ndash;&gt;-->
+ <!--&lt;!&ndash;https://spring.io/guides/gs/rest-service/&ndash;&gt;-->
+ <!--&lt;!&ndash;*/&ndash;&gt;-->
+<!--&lt;!&ndash;/*<![CDATA[*/&ndash;&gt;-->
+	<!--&lt;!&ndash;/*$.get( "/dataPoints", function( data ) {*/&ndash;&gt;-->
+		<!--&lt;!&ndash;/* Update dataPoints from AJAX and render the chart*/&ndash;&gt;-->
+		<!--&lt;!&ndash;/*[+&ndash;&gt;-->
+			<!--&lt;!&ndash;//chart.options.data[0].dataPoints = JSON.parse([[${session.dataPoints}]]);		&ndash;&gt;-->
+			<!--&lt;!&ndash;//chart.render();		&ndash;&gt;-->
+		 <!--&lt;!&ndash;+]*/&ndash;&gt;-->
+	<!--&lt;!&ndash;/*});*/	&ndash;&gt;-->
+<!--&lt;!&ndash;/*]]>*/&ndash;&gt;-->
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Test 2</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<script th:inline="javascript">-->
+    <!--/*<![CDATA[*/-->
+    <!--window.onload = function() {-->
+        <!--var pontos = /*[[${pontos}]]*/ 'default';-->
+
+        <!--//  Only a test-->
+        <!--pontos.forEach(myFunction);-->
+        <!--function myFunction(value, index, array) {-->
+            <!--console.log(value);-->
+        <!--}-->
+
+        <!--var chart = new CanvasJS.Chart("chartContainer", {-->
+            <!--animationEnabled: false,-->
+            <!--theme: "light2",-->
+            <!--title:{-->
+                <!--text: "Line Sample"-->
+            <!--},-->
+            <!--axisY:{-->
+                <!--includeZero: false-->
+            <!--},-->
+            <!--data: [{-->
+                <!--type: "line",-->
+                <!--dataPoints: []-->
+            <!--}]-->
+        <!--});-->
+
+        <!--/* Update dataPoints from AJAX and render the chart*/-->
+        <!--chart.options.data[0].dataPoints = pontos;-->
+        <!--chart.render();-->
+
+    <!--}-->
+    <!--/*]]>*/-->
+<!--</script>-->
+<!--<div id="chartContainer" style="height: 370px; width: 100%;"></div>-->
+<!--<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
